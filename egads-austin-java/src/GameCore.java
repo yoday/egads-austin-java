@@ -15,15 +15,18 @@ import java.util.TimerTask;
 import javax.imageio.ImageIO;
 import javax.swing.JApplet;
 
-
+/**
+ * This class is the receiver of all inputs of GameMain and
+ * allows us to not worry about where the inputs are coming from.
+ * 
+ * @author Yoan Chinique
+ */
 public class GameCore implements MouseListener, MouseMotionListener, KeyListener {
-	private static final long serialVersionUID = 543954373910725885L;
 	
 	private HashMap<String, BufferedImage> imageCache;
 	private HashMap<String, AudioClip> audioCache;
 	
 	public GameCore() {
-		super();
 		imageCache = new HashMap<String, BufferedImage>();
 		audioCache = new HashMap<String, AudioClip>();
 	}
@@ -41,47 +44,63 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 		
 	}
 	
+	
 	public void shutdown() {
-		throw new RuntimeException("Method not implemented!");
+		this.onExit();
 	}
+	/**
+	 * This method finds, loads, and caches an image resource given its file path.
+	 * 
+	 * @param path The file path to the resource.
+	 * @return An image is returned or null if it could not be loaded.
+	 */
 	public BufferedImage getImage(String path) {
+		//if the image has been catched, return it
 		if (imageCache.containsKey(path))
 			return imageCache.get(path);
 		
+		//open a resource stream, if we can't, then return null
 		InputStream stream = this.getClass().getResourceAsStream(path);
 		if (stream == null)
 			return null;
 		
+		//try to decode the image from the input stream
 		BufferedImage img;
 		try {
+			//if we succeed, cache the image and return it
 			img = ImageIO.read(stream);
 			imageCache.put(path, img);
 			return img;
 		} catch (IOException e) {
+			//if we fail, print the error and return null
 			e.printStackTrace();
 			return null;
 		}
 	}
+	/**
+	 * This method finds, loads, and caches an audio resource given its file path.
+	 * 
+	 * @param path The file path to the resource.
+	 * @return An AudioClip is returned or null if it could not be loaded.
+	 */
 	public AudioClip getAudio(String path) {
+		//if it has been catched, return it
 		if (audioCache.containsKey(path))
 			return audioCache.get(path);
 		
+		//get the url of the resource, if we fail, return null
 		URL url = this.getClass().getResource(path);
 		if (url == null)
 			return null;
 		
+		//try to load the clip, if we fail, return null
 		AudioClip clip = JApplet.newAudioClip(url);
 		if (clip == null)
 			return null;
 		
+		//if we succeed, catch it and return it
 		audioCache.put(path, clip);
 		return clip;
-	}
-	public void saveScore(String player, int score) {
-		throw new RuntimeException("Method not implemented!");
-	}
-	public int loadScore(String player) {
-		throw new RuntimeException("Method not implemented!");
 	}
 	
 	public void keyPressed(KeyEvent arg0) {
