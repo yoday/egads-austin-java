@@ -18,7 +18,7 @@ public abstract class Enemy extends Entity{
 		int sd = dx2+dy2;
 		return sr2 <= sd;
 	}
-	public abstract boolean isEdible();
+	public abstract boolean isEdible(int tadpoleState);
 	public abstract int getPointsValue();
 	public abstract boolean isMobile();
 	
