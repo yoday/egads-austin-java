@@ -59,7 +59,6 @@ public class GameMain extends JApplet {
 	private void setupTimer() {
 		timer = new Timer();
 		TimerTask task = new TimerTask(){
-			@Override
 			public void run() {
 				core.onUpdate(this);
 			}
@@ -67,7 +66,6 @@ public class GameMain extends JApplet {
 		timer.scheduleAtFixedRate(task, 1000, 1000 / FRAMES_PER_SEC);
 	}
 	
-	@Override
 	public void init() {
 		core = new GameCore();
 		this.addKeyListener(core);
@@ -81,12 +79,10 @@ public class GameMain extends JApplet {
 		core.onInit();
 	}
 	
-	@Override
 	public void paint(Graphics g) {
 		core.onRender((Graphics2D)g);
 	}
 	
-	@Override
 	public void destroy() {
 		core.onExit();
 	}
