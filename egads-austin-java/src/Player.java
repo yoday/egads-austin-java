@@ -10,7 +10,7 @@ public class Player extends Entity{
 	public static final int FROG = 4;
 	
 	int AgeState = EGG;
-	int x = 0; int y = 0;
+	int x = 0; int y = 0; int r = 7;
 	boolean up,left,down,right,space;
 	int direction = 0;
 	double theta = 0;
@@ -22,7 +22,8 @@ public class Player extends Entity{
 	
 	public void draw(Graphics2D g2) {
 		g2.rotate(deltatheta);
-		deltatheta = 0;
+		g2.drawOval(x, y, r, r/2);
+		g2.rotate(-deltatheta);
 	}
 	
 	public void kill(int condition) {
@@ -116,5 +117,24 @@ public class Player extends Entity{
 		if(isDown && AgeState == EGG)
 		growth++;
 	}
+	boolean isColliding(Enemy e){
+		if(e.isColliding(x, y, r)){
+			if(e.isEdible() && AgeState  != EGG){ // We need to kill the enemy and increase the score and growth of the the player
+			growth += e.getPointsValue();
+			e.kill(AgeState);
+			
+			}
+			else // e is not Edible (The player should die)
+			{
+				this.kill(AgeState); // show the animation for kill
+				// TODO Do we need to make an e.grow(), so enemies can get bigger?
+			}
+		
+		return true;
+	}
+		else
+			return false; // there is no collision, so the calling method does not need to have a pointer.
+	}
+	
 	
 }
