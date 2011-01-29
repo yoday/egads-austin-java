@@ -17,17 +17,17 @@ public class Player extends Entity{
 	double deltatheta = 0;
 	double slide = 0;
 	int growth = 0;
-	int speed = 0;
+	int speed = 10;
 	
 	
 	
 	public void draw(Graphics2D g2) {
-		g2.rotate(deltatheta,x + r,y + r);
+		g2.rotate(deltatheta,x + r*2,y + r);
 		Color tmp = g2.getColor();
 		g2.setColor(Color.BLACK);
-		g2.fillOval(x, y, r*2, r*2);
+		g2.fillOval(x, y, r*4, r*2);
 		g2.setColor(tmp);
-		g2.rotate(-deltatheta,-(x + r),-(y + r));
+		g2.rotate(-deltatheta,-(x + 2*r),-(y + r));
 	}
 	
 	public void kill(int condition) {
@@ -38,8 +38,6 @@ public class Player extends Entity{
 	
 	//Key Cases that should do nothing: UP && DOWN || LEFT && RIGHT
 	public void update() {
-		deltatheta += .01;
-		slide += 1;
 		switch(AgeState){
 		case EGG: 
 			if(growth >= 20){
@@ -89,11 +87,11 @@ public class Player extends Entity{
 		}
 		if(left && !right){
 			theta += Math.PI/16;
-			deltatheta = Math.PI/16;
+			deltatheta += Math.PI/16;
 		}
 		else if(right && !left){
 			theta -= Math.PI/16;
-			deltatheta = - Math.PI/16;
+			deltatheta += - Math.PI/16;
 		}
 		//Now for the movement.
 		x += direction*speed*Math.cos(theta);
@@ -125,7 +123,7 @@ public class Player extends Entity{
 	}
 	boolean isColliding(Enemy e){
 		if(e.isColliding(x, y, r)){
-			if(e.isEdible() && AgeState  != EGG){ // We need to kill the enemy and increase the score and growth of the the player
+			if(e.isEdible(AgeState)){ // We need to kill the enemy and increase the score and growth of the the player
 			growth += e.getPointsValue();
 			e.kill(AgeState);
 			
