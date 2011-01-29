@@ -1,4 +1,4 @@
-import java.awt.Graphics2D;
+import java.awt.*;
 
 public class Player extends Entity{
 	
@@ -10,7 +10,7 @@ public class Player extends Entity{
 	public static final int FROG = 4;
 	
 	int AgeState = EGG;
-	int x = 0; int y = 0; int r = 7;
+	int x = 0; int y = 0; int r = 50;
 	boolean up,left,down,right,space;
 	int direction = 0;
 	double theta = 0;
@@ -22,7 +22,10 @@ public class Player extends Entity{
 	
 	public void draw(Graphics2D g2) {
 		g2.rotate(deltatheta);
-		g2.drawOval(x, y, r, r/2);
+		Color tmp = g2.getColor();
+		g2.setColor(Color.BLACK);
+		g2.fillOval(x, y, r, r/2);
+		g2.setColor(tmp);
 		g2.rotate(-deltatheta);
 	}
 	
