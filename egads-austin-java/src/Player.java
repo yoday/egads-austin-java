@@ -1,8 +1,16 @@
+import java.applet.AudioClip;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.lang.ref.WeakReference;
 
 public class Player extends Entity{
 	
 	//some constants that state at what phase this food can be eaten
+	public static final String imgEgg = "art/animations/1egg.png";
+	public static final String imgHatched = "art/animations/2hatched.png";
+	public static final String imgHindlegs = "art/animations/3hindlegs.png";
+	public static final String imgAlmostFrog = "art/animations/4almostfrog.png";
+	public static final String imgFrog = "art/animations/5Frog.png";
 	public static final int EGG = 0;
 	public static final int TADPOLE = 1;
 	public static final int HINDLEGS = 2;
@@ -11,6 +19,11 @@ public class Player extends Entity{
 	
 	int AgeState = EGG;
 	int x = 150; int y = 150; int r = 50;
+	private BufferedImage bi;
+	private AudioClip ac;
+	WeakReference<GameCore> gmc;
+	String imgName = imgEgg;
+	String sndName;
 	boolean up,left,down,right,space;
 	int direction = 0;
 	double theta = 0;
@@ -22,12 +35,9 @@ public class Player extends Entity{
 	
 	
 	public void draw(Graphics2D g2) {
-		g2.rotate(deltatheta,x + r*2,y + r);
-		Color tmp = g2.getColor();
-		g2.setColor(Color.BLACK);
-		g2.fillOval(x, y, r*4, r*2);
-		g2.setColor(tmp);
-		g2.rotate(-deltatheta,-(x + 2*r),-(y + r));
+		g2.rotate(deltatheta,x + r,y + r);
+		g2.drawImage(bi, x, y, null);
+		g2.rotate(-deltatheta,-(x + r),-(y + r));
 	}
 	
 	public void kill(int condition) {
@@ -44,6 +54,8 @@ public class Player extends Entity{
 				AgeState = TADPOLE; 
 				growth = 0;
 				speed = 2;
+				imgName = imgHatched;
+				bi = gmc.get().getImage(imgName);				
 			}
 		break;
 		case TADPOLE:
@@ -51,6 +63,8 @@ public class Player extends Entity{
 				AgeState = HINDLEGS; 
 				growth = 0;
 				speed = 3;
+				imgName = imgHindlegs;
+				bi = gmc.get().getImage(imgName);	
 			}
 		break;
 		case HINDLEGS:
@@ -58,6 +72,8 @@ public class Player extends Entity{
 				AgeState = NEARFROG; 
 				growth = 0;
 				speed = 3;
+				imgName = imgAlmostFrog;
+				bi = gmc.get().getImage(imgName);	
 			}
 		break;
 		case NEARFROG:
@@ -65,6 +81,8 @@ public class Player extends Entity{
 				AgeState = FROG; 
 				growth = 0;
 				speed = 4;
+				imgName = imgFrog;
+				bi = gmc.get().getImage(imgName);	
 			}
 		break;
 		case FROG:
@@ -72,6 +90,8 @@ public class Player extends Entity{
 				AgeState = EGG; 
 				growth = 0;
 				speed = 0;
+				imgName = imgEgg;
+				bi = gmc.get().getImage(imgName);	
 			}
 		break;
 		}
@@ -86,12 +106,12 @@ public class Player extends Entity{
 			direction = 0;
 		}
 		if(left && !right){
-			theta += Math.PI/16;
-			deltatheta += Math.PI/16;
+			theta -= Math.PI/16;
+			deltatheta +=  - Math.PI/16;
 		}
 		else if(right && !left){
-			theta -= Math.PI/16;
-			deltatheta += - Math.PI/16;
+			theta += Math.PI/16;
+			deltatheta += Math.PI/16;
 		}
 		//Now for the movement.
 		x += direction*speed*Math.cos(theta);
@@ -102,8 +122,12 @@ public class Player extends Entity{
 	}
 
 	public void init(GameCore gc) {
-		// TODO Auto-generated method stub
-		
+		bi = gc.getImage(imgName);
+		ac = gc.getAudio(sndName);
+		int w = bi.getWidth();
+		int h = bi.getHeight();
+		r = (w>h) ? h/2 : w/2;
+		gmc = new WeakReference<GameCore>(gc);
 	}
 	public void upthrust(boolean isDown){
 		this.up = isDown; // pressing the up key
