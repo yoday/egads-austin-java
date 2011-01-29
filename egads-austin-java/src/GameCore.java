@@ -23,7 +23,9 @@ import javax.swing.JApplet;
  * @author Yoan Chinique
  */
 public class GameCore implements MouseListener, MouseMotionListener, KeyListener {
-	Player p = new Player();
+	ScoreBoard sb = new ScoreBoard();
+	Player p = new Player(sb);
+	
 	private static final long serialVersionUID = 543954373910725885L;
 	
 	private HashMap<String, BufferedImage> imageCache;
@@ -35,13 +37,17 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 	}
 	
 	public void onInit() {
+		Entity.setPlayer(p);
 		p.init(this);
+		sb.init(this);
 	}
 	public void onRender(Graphics2D g) {
 		p.draw(g);
+		sb.draw(g);
 	}
 	public void onUpdate(TimerTask time) {
 		p.update();
+		sb.update();
 	}
 	public void onExit() {
 		
