@@ -35,9 +35,9 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 	}
 	
 	public void onInit() {
+		p.init(this);
 	}
 	public void onRender(Graphics2D g) {
-		g.clearRect(0, 0, 800, 600);
 		p.draw(g);
 	}
 	public void onUpdate(TimerTask time) {

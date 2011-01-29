@@ -1,8 +1,10 @@
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -29,9 +31,19 @@ public class GameMain extends JApplet {
 	private GameCore core;
 	private JFrame frame;
 	private Timer timer;
+	private BufferedImage screenBuffer;
+	private Graphics2D screenGraphics;
 	
 	public GameMain() {
-		
+	}
+	
+	public void bufferAndRender(Graphics2D g) {
+		g.drawImage(screenBuffer, 0, 0, null);
+		screenGraphics = screenBuffer.createGraphics();
+		screenGraphics.setColor(Color.WHITE);
+		screenGraphics.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+		core.onRender(screenGraphics);
+		screenGraphics.dispose();
 	}
 	
 	/**
@@ -39,11 +51,16 @@ public class GameMain extends JApplet {
 	 */
 	private void setupGUI() {
 		core = new GameCore();
+		screenBuffer = new BufferedImage(GAME_WIDTH, GAME_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+		screenGraphics = screenBuffer.createGraphics();
+		screenGraphics.setColor(Color.WHITE);
+		screenGraphics.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+		screenGraphics.dispose();
 		//create a frame, capture and forward painting to GameCore
 		frame = new JFrame(GAME_NAME) {
 			private static final long serialVersionUID = -621672776770107554L;
 			public void paint(Graphics g) {
-				core.onRender((Graphics2D)g);
+				bufferAndRender((Graphics2D)g);
 			};
 		};
 		//capture and forward inputs to GameCore
@@ -90,6 +107,11 @@ public class GameMain extends JApplet {
 	 */
 	public void init() {
 		core = new GameCore();
+		screenBuffer = new BufferedImage(GAME_WIDTH, GAME_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+		screenGraphics = screenBuffer.createGraphics();
+		screenGraphics.setColor(Color.WHITE);
+		screenGraphics.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+		screenGraphics.dispose();
 		//capture and forward inputs to GameCore
 		this.addKeyListener(core);
 		this.addMouseListener(core);
@@ -110,7 +132,7 @@ public class GameMain extends JApplet {
 	 * from the applet to the GameCore.
 	 */
 	public void paint(Graphics g) {
-		core.onRender((Graphics2D)g);
+		bufferAndRender((Graphics2D)g);
 	}
 	
 	/**
