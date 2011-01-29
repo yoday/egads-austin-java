@@ -121,6 +121,9 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 		case KeyEvent.VK_D:
 			p.rightturn(true);
 			break;
+		case KeyEvent.VK_SPACE:
+			p.BreakEgg(true);
+			break;
 		default : break;
 		}
 		
