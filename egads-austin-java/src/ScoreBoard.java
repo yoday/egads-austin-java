@@ -58,7 +58,40 @@ public class ScoreBoard extends Entity{
 		}
 	}
 	public void update(){
-		
+		if(over>0){
+			int curpow = 1;
+			int num = 1;
+			boolean found = false;
+			while(!found){
+				if(over>(10*curpow)){
+					curpow*=10;
+					num++;
+				}
+				else{
+					found = true;
+				}
+			}
+			if(num>1){num--;}
+			int carry = 0;
+			int added = 0;
+			curpow = 1;
+			for(int i = 1;i<=num;i++){
+				added += ((num-i)*curpow);
+				curpow*=10;
+				digits[digits.length-i] += (num-i) + carry;
+				if(digits[digits.length-i]>9){
+					carry = 1;
+					digits[digits.length-i] -= 10;
+				}
+				else{
+					carry = 0;
+				}
+			}
+			if(carry == 1){
+				
+			}
+			over-=added;
+		}
 	}
 	public void init(GameCore gc){
 		numbs = new BufferedImage[numimgnames.length];
