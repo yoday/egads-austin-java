@@ -53,48 +53,53 @@ public class Player extends Entity{
 	public void update() {
 		switch(AgeState){
 		case EGG: 
-			if(growth >= 20){
+			if(needEvolve){
 				AgeState = TADPOLE; 
 				growth = 0;
 				speed = 4;
 				imgName = imgHatched;
-				bi = gmc.get().getImage(imgName);				
+				bi = gmc.get().getImage(imgName);
+				needEvolve = false;
 			}
 		break;
 		case TADPOLE:
-			if(growth >= 40){
+			if(needEvolve){
 				AgeState = HINDLEGS; 
 				growth = 0;
 				speed = 3;
 				imgName = imgHindlegs;
 				bi = gmc.get().getImage(imgName);	
+				needEvolve = false;
 			}
 		break;
 		case HINDLEGS:
-			if(growth >= 80){
+			if(needEvolve){
 				AgeState = NEARFROG; 
 				growth = 0;
 				speed = 3;
 				imgName = imgAlmostFrog;
-				bi = gmc.get().getImage(imgName);	
+				bi = gmc.get().getImage(imgName);
+				needEvolve = false;
 			}
 		break;
 		case NEARFROG:
-			if(growth >= 160){
+			if(needEvolve){
 				AgeState = FROG; 
 				growth = 0;
 				speed = 4;
 				imgName = imgFrog;
-				bi = gmc.get().getImage(imgName);	
+				bi = gmc.get().getImage(imgName);
+				needEvolve = false;
 			}
 		break;
 		case FROG:
-			if(growth >= 320){
+			if(needEvolve){
 				AgeState = EGG; 
 				growth = 0;
 				speed = 0;
 				imgName = imgEgg;
-				bi = gmc.get().getImage(imgName);	
+				bi = gmc.get().getImage(imgName);
+				needEvolve = false;
 			}
 		break;
 		}
@@ -147,18 +152,20 @@ public class Player extends Entity{
 	//Need to be in egg to be able to break egg.
 	public void BreakEgg(boolean isDown){
 		if(isDown && AgeState == EGG)
-		growth++;
+			score.addPts(1);
+		//growth++;
 	}
 	boolean isColliding(Enemy e){
 		if(e.isColliding((int)x, (int)y, r)){
 			if(e.isEdible(AgeState)){ // We need to kill the enemy and increase the score and growth of the the player
-			growth += e.getPointsValue();
+			//growth += e.getPointsValue();
+			score.addPts(e.getPointsValue());
 			e.kill(AgeState);
 			
 			}
 			else // e is not Edible (The player should die)
 			{
-				this.kill(AgeState); // show the animation for kill
+				//this.kill(AgeState); // show the animation for kill
 				// TODO Do we need to make an e.grow(), so enemies can get bigger?
 			}
 		
@@ -168,5 +175,13 @@ public class Player extends Entity{
 			return false; // there is no collision, so the calling method does not need to have a pointer.
 	}
 	
+	public void evolve(){
+		needEvolve = true;
+	}
+	private boolean needEvolve = false;
+	private ScoreBoard score;
+	public Player(ScoreBoard sc){
+		score = sc;
+	}
 	
 }
