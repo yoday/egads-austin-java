@@ -1,4 +1,5 @@
 import java.applet.AudioClip;
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -22,6 +23,8 @@ import javax.swing.JApplet;
  * @author Yoan Chinique
  */
 public class GameCore implements MouseListener, MouseMotionListener, KeyListener {
+	Player p = new Player();
+	private static final long serialVersionUID = 543954373910725885L;
 	
 	private HashMap<String, BufferedImage> imageCache;
 	private HashMap<String, AudioClip> audioCache;
@@ -32,13 +35,13 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 	}
 	
 	public void onInit() {
-		
 	}
 	public void onRender(Graphics2D g) {
-		
+		g.clearRect(0, 0, 800, 600);
+		p.draw(g);
 	}
 	public void onUpdate(TimerTask time) {
-		
+		p.update();
 	}
 	public void onExit() {
 		
@@ -46,7 +49,8 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 	
 	
 	public void shutdown() {
-		this.onExit();
+			this.onExit();
+
 	}
 	/**
 	 * This method finds, loads, and caches an image resource given its file path.
@@ -103,12 +107,41 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 		return clip;
 	}
 	
-	public void keyPressed(KeyEvent arg0) {
-		// TODO Auto-generated method stub
+	public void keyPressed(KeyEvent key) {
+		switch(key.getKeyCode()){
+		case KeyEvent.VK_W: 
+			p.upthrust(true);
+			break;
+		case KeyEvent.VK_S:
+			p.downthrust(true);
+			break;
+		case KeyEvent.VK_A:
+			p.leftturn(true);
+			break;
+		case KeyEvent.VK_D:
+			p.rightturn(true);
+			break;
+		default : break;
+		}
+		
 		
 	}
-	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
+	public void keyReleased(KeyEvent key) {
+		switch(key.getKeyCode()){
+		case KeyEvent.VK_W: 
+			p.upthrust(false);
+			break;
+		case KeyEvent.VK_S:
+			p.downthrust(false);
+			break;
+		case KeyEvent.VK_A:
+			p.leftturn(false);
+			break;
+		case KeyEvent.VK_D:
+			p.rightturn(false);
+			break;
+		default : break;
+		}
 		
 	}
 	
