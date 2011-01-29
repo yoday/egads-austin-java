@@ -12,9 +12,9 @@ public class ScoreBoard extends Entity{
 	private static final Color BARCOL = Color.WHITE;
 	private int NUMWIDTH;
 	//image names
-	private static String[] numimgnames = new String[]{"0","1","2","3","4","5","6","7","8","9"};
-	private static String[] onstatenames = new String[]{"","","","",""};
-	private static String[] offstatenames = new String[]{"","","","",""};
+	private static String[] numimgnames = new String[]{"art/numbers/0.png","art/numbers/1.png","art/numbers/2.png","art/numbers/3.png","art/numbers/4.png","art/numbers/5.png","art/numbers/6.png","art/numbers/7.png","art/numbers/8.png","art/numbers/9.png"};
+	private static String[] onstatenames = new String[]{"art/forevolutionbar/1egg-color.png","art/forevolutionbar/2hatched-color.png","art/forevolutionbar/3hindlegs-color.png","art/forevolutionbar/4almostfrog-color.png","art/forevolutionbar/5frog-color.png"};
+	private static String[] offstatenames = new String[]{"art/forevolutionbar/1egg-bw.png","art/forevolutionbar/2hatched-bw.png","art/forevolutionbar/3hindlegs-bw.png","art/forevolutionbar/4almostfrog-bw.png","art/forevolutionbar/5frog-bw.png"};
 	//how many points required to proceed to the next state
 	private static int[] toNextState = new int[]{100,100,100,100,100};
 	//the actual images
@@ -32,7 +32,10 @@ public class ScoreBoard extends Entity{
 	//used for a rolling counter, how many points must counter count
 	private int over = 0;
 	public void draw(Graphics2D g2){
-		int barw = (BARWIDTH*curSt)/4 + (int)((BARWIDTH*((1-(1.0f*curPt)/toNextState[curSt])))/4);
+		int barw = (BARWIDTH*curSt)/4;
+		if(curSt<4){
+			barw+=(int)((BARWIDTH*((1-(1.0f*curPt)/toNextState[curSt])))/4);
+		}
 		Color tmp = g2.getColor();
 		g2.setColor(BARCOL);
 		g2.fillRect(BARLOCX,BARLOCY,barw,BARHEIGHT);

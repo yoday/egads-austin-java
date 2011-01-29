@@ -2,6 +2,7 @@ import java.applet.AudioClip;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.lang.ref.WeakReference;
+import java.awt.geom.*;
 
 public class Player extends Entity{
 	
@@ -38,9 +39,10 @@ public class Player extends Entity{
 	
 	
 	public void draw(Graphics2D g2) {
+		AffineTransform atmp = g2.getTransform();
 		g2.rotate(deltatheta,x + r,y + r);
 		g2.drawImage(bi, (int)x, (int)y, null);
-		g2.rotate(-deltatheta,-(x + r),-(y + r));
+		g2.setTransform(atmp);
 	}
 	
 	public void kill(int condition) {
