@@ -3,8 +3,8 @@ import java.awt.image.*;
 
 public class ScoreBoard extends Entity{
 	//location information
-	private static final int BARLOCX = 20;
-	private static final int BARLOCY = 20;
+	private static final int BARLOCX = 80;
+	private static final int BARLOCY = 30;
 	private static final int NUMLOCX = 10;
 	private static final int NUMLOCY = 70;
 	private static final int BARWIDTH = 600;
@@ -31,6 +31,7 @@ public class ScoreBoard extends Entity{
 	private long score = 0;
 	//used for a rolling counter, how many points must counter count
 	private int over = 0;
+	private static final int ROLLSPD = 3;
 	public void draw(Graphics2D g2){
 		int barw = (BARWIDTH*curSt)/4;
 		if(curSt<4){
@@ -44,11 +45,11 @@ public class ScoreBoard extends Entity{
 		barw = BARWIDTH /4;
 		int cxl = BARLOCX;
 		for(int i = 0;i<=curSt;i++){
-			g2.drawImage(onstates[i],cxl,BARLOCY,onstates[i].getWidth()/4,onstates[i].getHeight()/4,null);
+			g2.drawImage(onstates[i],cxl-onstates[i].getWidth()/8,BARLOCY-onstates[i].getHeight()/8,onstates[i].getWidth()/4,onstates[i].getHeight()/4,null);
 			cxl += barw;
 		}
 		for(int i = curSt+1;i<offstates.length;i++){
-			g2.drawImage(offstates[i],cxl,BARLOCY,offstates[i].getWidth()/4,offstates[i].getHeight()/4,null);
+			g2.drawImage(offstates[i],cxl-offstates[i].getWidth()/8,BARLOCY-offstates[i].getHeight()/8,offstates[i].getWidth()/4,offstates[i].getHeight()/4,null);
 			cxl += barw;
 		}
 		int nxl = NUMLOCX;
@@ -59,38 +60,27 @@ public class ScoreBoard extends Entity{
 	}
 	public void update(){
 		if(over>0){
-			int curpow = 1;
-			int num = 1;
-			boolean found = false;
-			while(!found){
-				if(over>(10*curpow)){
-					curpow*=10;
-					num++;
-				}
-				else{
-					found = true;
-				}
+		
+			int pos = digits.length-1;
+			if(over>ROLLSPD){
+				digits[pos]+=ROLLSPD;
+				over-=ROLLSPD;
 			}
-			if(num>1){num--;}
-			int carry = 0;
-			int added = 0;
-			curpow = 1;
-			for(int i = 1;i<=num;i++){
-				added += ((num-i)*curpow);
-				curpow*=10;
-				digits[digits.length-i] += (num-i) + carry;
-				if(digits[digits.length-i]>9){
-					carry = 1;
-					digits[digits.length-i] -= 10;
-				}
-				else{
-					carry = 0;
-				}
+			else{
+				digits[pos] += over;
+				over = 0;
 			}
-			if(carry == 1){
-				
+			for(int i = 0;i<digits.length-1;i++){
+				if(digits[pos]>9){
+					digits[pos]-=10;
+					digits[pos-1]+=1;
+				}
+				pos--;
 			}
-			over-=added;
+			if(digits[0]>9){
+				digits[0] -= 10;
+			}
+			
 		}
 	}
 	public void init(GameCore gc){
