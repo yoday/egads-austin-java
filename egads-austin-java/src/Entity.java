@@ -9,4 +9,5 @@ public abstract class Entity {
 	public abstract void draw(Graphics2D g2);
 	public abstract void update();
 	public abstract void kill(int condition);
+	public abstract void init(GameCore gc);
 }
