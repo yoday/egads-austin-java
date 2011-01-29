@@ -1,3 +1,4 @@
+import java.applet.AudioClip;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -7,9 +8,11 @@ import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
+import javax.swing.JApplet;
 
 
 public class GameCore implements MouseListener, MouseMotionListener, KeyListener {
@@ -47,8 +50,11 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 			return null;
 		}
 	}
-	public Object getAudio(String path) {
-		return null;
+	public AudioClip getAudio(String path) {
+		URL url = this.getClass().getResource(path);
+		if (url == null)
+			return null;
+		return JApplet.newAudioClip(url);
 	}
 	public void saveScore(String player, int score) {
 		throw new RuntimeException("Method not implemented!");
