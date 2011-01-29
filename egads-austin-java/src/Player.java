@@ -10,23 +10,24 @@ public class Player extends Entity{
 	public static final int FROG = 4;
 	
 	int AgeState = EGG;
-	int x = 0; int y = 0; int r = 50;
+	int x = 150; int y = 150; int r = 50;
 	boolean up,left,down,right,space;
 	int direction = 0;
 	double theta = 0;
 	double deltatheta = 0;
+	double slide = 0;
 	int growth = 0;
 	int speed = 0;
 	
 	
 	
 	public void draw(Graphics2D g2) {
-		g2.rotate(deltatheta);
+		g2.rotate(deltatheta,x + r,y + r);
 		Color tmp = g2.getColor();
 		g2.setColor(Color.BLACK);
-		g2.fillOval(x, y, r, r/2);
+		g2.fillOval(x, y, r*2, r*2);
 		g2.setColor(tmp);
-		g2.rotate(-deltatheta);
+		g2.rotate(-deltatheta,-(x + r),-(y + r));
 	}
 	
 	public void kill(int condition) {
@@ -37,6 +38,8 @@ public class Player extends Entity{
 	
 	//Key Cases that should do nothing: UP && DOWN || LEFT && RIGHT
 	public void update() {
+		deltatheta += .01;
+		slide += 1;
 		switch(AgeState){
 		case EGG: 
 			if(growth >= 20){
