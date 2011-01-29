@@ -13,13 +13,20 @@ public class EnemyTadpole extends Enemy {
 	int AgeState = EGG;
 	List<Enemy> foodList;
 	List<Enemy> closestList;
-	Enemy goToEnemy;
+	Enemy target;
+	double theta = (Math.PI * 3) / 2;
+	double destinationTheta = 0;
+	int growth = 0;
+	int speed = 10;
+	int r = 50;
+	int difficulty;
 
 	//constructor
-	public EnemyTadpole(int xPos,int yPos, List<Enemy> food){
+	public EnemyTadpole(int xPos,int yPos, List<Enemy> food, int diff){
 		cx = xPos;
 		cy = yPos;
 		foodList = food;
+		difficulty = diff;
 	}
 	
 	@Override
@@ -34,14 +41,80 @@ public class EnemyTadpole extends Enemy {
 
 	@Override
 	public void draw(Graphics2D g2) {
-		// TODO Auto-generated method stub
-
+		g2.rotate(deltatheta,cx + r,cy + r);
+		//DRAW THE IMAGE
+		//g2.drawImage(bi, (int)x, (int)y, null);
+		g2.rotate(-deltatheta,-(cx + r),-(cy + r));
 	}
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-
+		switch(AgeState){
+		case EGG: 
+			if(growth >= 20){
+				AgeState = TADPOLE; 
+				growth = 0;
+				speed = 4;
+				//imgName = imgHatched;
+				//bi = gmc.get().getImage(imgName);				
+			}
+		break;
+		case TADPOLE:
+			if(growth >= 40){
+				AgeState = HINDLEGS; 
+				growth = 0;
+				speed = 3;
+				//imgName = imgHindlegs;
+				//bi = gmc.get().getImage(imgName);	
+			}
+		break;
+		case HINDLEGS:
+			if(growth >= 80){
+				AgeState = NEARFROG; 
+				growth = 0;
+				speed = 3;
+				//imgName = imgAlmostFrog;
+				//bi = gmc.get().getImage(imgName);	
+			}
+		break;
+		case NEARFROG:
+			if(growth >= 160){
+				AgeState = FROG; 
+				growth = 0;
+				speed = 4;
+				//imgName = imgFrog;
+				//bi = gmc.get().getImage(imgName);	
+			}
+		break;
+		case FROG:
+			if(growth >= 320){
+				AgeState = EGG; 
+				growth = 0;
+				speed = 0;
+				//imgName = imgEgg;
+				//bi = gmc.get().getImage(imgName);	
+			}
+		break;
+		}
+		if( target == null )
+			target = getClosest(difficulty);
+		
+		destinationTheta = Math.abs(Math.atan((1.0*(target.cy - cy))/(1.0*(target.cx - cx))));
+		if(destinationTheta > theta) {
+			if(destinationTheta - theta <= Math.PI && destinationTheta - theta >= 0)
+				theta += Math.PI/16;
+			else
+				theta -= Math.PI/16;
+		}
+		else {
+			if(theta - destinationTheta <= Math.PI && theta - destinationTheta >= 0)
+				theta -= Math.PI/16;
+			else
+				theta += Math.PI/16;
+		}
+		
+		cx += speed*Math.cos(theta);
+		cy += speed*Math.sin(theta);
 	}
 
 	@Override
@@ -58,6 +131,8 @@ public class EnemyTadpole extends Enemy {
 	
 	@Override
 	public boolean isMobile() {
+		if(AgeState == EGG)
+			return false;
 		return true;
 	}
 	
@@ -107,6 +182,25 @@ public class EnemyTadpole extends Enemy {
 		int tempx = (this.cx - e.cx); tempx *= tempx;
 		int tempy = (this.cy - e.cy); tempy *= tempy;
 		return tempx + tempy;
+	}
+	
+	boolean isColliding(Enemy e){
+		if(e.isColliding(cx, cy, r)){
+			if(e.isEdible(AgeState)){ // We need to kill the enemy and increase the score and growth of the the player
+				growth += e.getPointsValue();
+				e.kill(AgeState);
+				target = getClosest(difficulty);
+			}
+			else // e is not Edible (The player should die)
+			{
+				this.kill(AgeState); // show the animation for kill
+				// TODO Do we need to make an e.grow(), so enemies can get bigger?
+			}
+		
+		return true;
+	}
+		else
+			return false; // there is no collision, so the calling method does not need to have a pointer.
 	}
 
 }
