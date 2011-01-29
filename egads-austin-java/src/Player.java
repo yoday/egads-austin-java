@@ -7,11 +7,28 @@ import java.awt.geom.*;
 public class Player extends Entity{
 	
 	//some constants that state at what phase this food can be eaten
-	public static final String imgEgg = "art/animations/1egg.png";
-	public static final String imgHatched = "art/animations/2hatched.png";
-	public static final String imgHindlegs = "art/animations/3hindlegs.png";
-	public static final String imgAlmostFrog = "art/animations/4almostfrog.png";
-	public static final String imgFrog = "art/animations/5Frog.png";
+	
+//	public static final String imgEgg = "art/animations/1egg.png";
+//	public static final String imgHatched = "art/animations/2hatched.png";
+//	public static final String imgHindlegs = "art/animations/3hindlegs.png";
+//	public static final String imgAlmostFrog = "art/animations/4almostfrog.png";
+//	public static final String imgFrog = "art/animations/5Frog.png";
+	
+//	public static final String [] imgEgg = {"art/animations/1egg.png"};
+//	public static final String [] imgHatched = {"art/animations/2hatched.png"};
+//	public static final String [] imgHindlegs = {"art/animations/3hindlegs.png"};
+//	public static final String [] imgAlmostFrog = {"art/animations/4almostfrog.png"};
+//	public static final String [] imgFrog = {"art/animations/5Frog.png"};
+//	public static final String [] Currentimg = imgEgg;
+//	
+	
+	public static  BufferedImage [] imgEgg;
+	public static  BufferedImage [] imgHatched;
+	public static  BufferedImage [] imgHindlegs;
+	public static  BufferedImage [] imgAlmostFrog;
+	public static  BufferedImage [] imgFrog;
+	public static  BufferedImage [] Currentimg = imgEgg;
+	
 	public static final int EGG = 0;
 	public static final int TADPOLE = 1;
 	public static final int HINDLEGS = 2;
@@ -23,26 +40,26 @@ public class Player extends Entity{
 	private BufferedImage bi;
 	private AudioClip ac;
 	WeakReference<GameCore> gmc;
-	String imgName = imgEgg;
 	String sndName;
 	boolean up,left,down,right,space;
 	int direction = 0;
-	double theta = 0;
+	double theta = 3*Math.PI /2;
 	double deltatheta = 0;
-	double slide = 0;
 	int growth = 0;
 	int speed = 10;
 	int seqslot = 0; // Where I am in the image loop
-	int nimgs = 4; // Number of images for the current GIF
+	int nimgs = 4; // Number of images for the current GIF; There are 4 images for the Egg so we start with that.
 	
 	
 	
 	
 	public void draw(Graphics2D g2) {
+		bi = Currentimg[seqslot];
 		AffineTransform atmp = g2.getTransform();
 		g2.rotate(deltatheta,x + r,y + r);
 		g2.drawImage(bi, (int)x, (int)y, null);
 		g2.setTransform(atmp);
+		if(seqslot < Currentimg.length -1) seqslot ++; else seqslot = 0;
 	}
 	
 	public void kill(int condition) {
@@ -59,9 +76,13 @@ public class Player extends Entity{
 				AgeState = TADPOLE; 
 				growth = 0;
 				speed = 4;
-				imgName = imgHatched;
-				bi = gmc.get().getImage(imgName);
+				Currentimg = imgHatched;
+				seqslot = 0;
 				needEvolve = false;
+				bi = Currentimg[0];
+				int w = bi.getWidth();
+				int h = bi.getHeight();
+				r = (w>h) ? h/2 : w/2;
 			}
 		break;
 		case TADPOLE:
@@ -69,9 +90,13 @@ public class Player extends Entity{
 				AgeState = HINDLEGS; 
 				growth = 0;
 				speed = 3;
-				imgName = imgHindlegs;
-				bi = gmc.get().getImage(imgName);	
+				Currentimg = imgHindlegs;
+				seqslot = 0;
 				needEvolve = false;
+				bi = Currentimg[0];
+				int w = bi.getWidth();
+				int h = bi.getHeight();
+				r = (w>h) ? h/2 : w/2;
 			}
 		break;
 		case HINDLEGS:
@@ -79,9 +104,13 @@ public class Player extends Entity{
 				AgeState = NEARFROG; 
 				growth = 0;
 				speed = 3;
-				imgName = imgAlmostFrog;
-				bi = gmc.get().getImage(imgName);
+				Currentimg = imgAlmostFrog;
+				seqslot = 0;
 				needEvolve = false;
+				bi = Currentimg[0];
+				int w = bi.getWidth();
+				int h = bi.getHeight();
+				r = (w>h) ? h/2 : w/2;
 			}
 		break;
 		case NEARFROG:
@@ -89,9 +118,13 @@ public class Player extends Entity{
 				AgeState = FROG; 
 				growth = 0;
 				speed = 4;
-				imgName = imgFrog;
-				bi = gmc.get().getImage(imgName);
+				Currentimg = imgFrog;
+				seqslot = 0;
 				needEvolve = false;
+				bi = Currentimg[0];
+				int w = bi.getWidth();
+				int h = bi.getHeight();
+				r = (w>h) ? h/2 : w/2;
 			}
 		break;
 		case FROG:
@@ -99,9 +132,13 @@ public class Player extends Entity{
 				AgeState = EGG; 
 				growth = 0;
 				speed = 0;
-				imgName = imgEgg;
-				bi = gmc.get().getImage(imgName);
+				Currentimg = imgEgg;
+				seqslot = 0;
 				needEvolve = false;
+				bi = Currentimg[0];
+				int w = bi.getWidth();
+				int h = bi.getHeight();
+				r = (w>h) ? h/2 : w/2;
 			}
 		break;
 		}
@@ -132,12 +169,33 @@ public class Player extends Entity{
 	}
 
 	public void init(GameCore gc) {
-		bi = gc.getImage(imgName);
-		//ac = gc.getAudio(sndName);
+		imgEgg = new BufferedImage [] {gc.getImage("art/animations/egg/1egg_1.png"),
+				gc.getImage("art/animations/egg/1egg_2.png"),gc.getImage("art/animations/egg/1egg_3.png"),
+				gc.getImage("art/animations/egg/1egg_4.png")};
+		 imgHatched = new BufferedImage []  {gc.getImage("art/animations/hatched/2hatched_1.png"),
+				gc.getImage("art/animations/hatched/2hatched_2.png"),gc.getImage("art/animations/hatched/2hatched_3.png"),
+				gc.getImage("art/animations/hatched/2hatched_4.png"),gc.getImage("art/animations/hatched/2hatched_5.png"),
+				gc.getImage("art/animations/hatched/2hatched_6.png"),gc.getImage("art/animations/hatched/2hatched_7.png"),
+				gc.getImage("art/animations/hatched/2hatched_8.png")};
+		imgHindlegs = new BufferedImage []  {gc.getImage("art/animations/hindlegs/3hindlegs_1.png"),
+				gc.getImage("art/animations/hindlegs/3hindlegs_2.png"),gc.getImage("art/animations/hindlegs/3hindlegs_3.png"),
+				gc.getImage("art/animations/hindlegs/3hindlegs_4.png"),gc.getImage("art/animations/hindlegs/3hindlegs_5.png"),
+				gc.getImage("art/animations/hindlegs/3hindlegs_6.png"),gc.getImage("art/animations/hindlegs/3hindlegs_7.png"),
+				gc.getImage("art/animations/hindlegs/3hindlegs_8.png")};
+		 imgAlmostFrog = new BufferedImage []  {gc.getImage("art/animations/almostfrog/4almostfrog_1.png"),
+				gc.getImage("art/animations/almostfrog/4almostfrog_2.png"),gc.getImage("art/animations/almostfrog/4almostfrog_3.png"),
+				gc.getImage("art/animations/almostfrog/4almostfrog_4.png")};
+		 imgFrog  = new BufferedImage [] {gc.getImage("art/animations/frog/5frog_1.png"),
+				gc.getImage("art/animations/frog/5frog_2.png"),gc.getImage("art/animations/frog/5frog_3.png"),
+				gc.getImage("art/animations/frog/5frog_4.png"),gc.getImage("art/animations/frog/5frog_5.png"),
+				gc.getImage("art/animations/frog/5frog_6.png"),gc.getImage("art/animations/frog/5frog_7.png"),
+				gc.getImage("art/animations/frog/5frog_8.png"),gc.getImage("art/animations/frog/5frog_9.png")};
+		Currentimg = imgEgg;
+		bi = Currentimg[0];
 		int w = bi.getWidth();
 		int h = bi.getHeight();
 		r = (w>h) ? h/2 : w/2;
-		gmc = new WeakReference<GameCore>(gc);
+		
 	}
 	public void upthrust(boolean isDown){
 		this.up = isDown; // pressing the up key
@@ -153,9 +211,8 @@ public class Player extends Entity{
 	}
 	//Need to be in egg to be able to break egg.
 	public void BreakEgg(boolean isDown){
-		if(isDown && AgeState == EGG)
+//		if(isDown && AgeState == EGG)
 			score.addPts(1);
-		//growth++;
 	}
 	boolean isColliding(Enemy e){
 		if(e.isColliding((int)x, (int)y, r)){
