@@ -67,15 +67,13 @@ public class EnemyTadpole extends Enemy {
 			amount = foodList.size();	
 		
 		foodList.iterator();
-		int closestDistance = -1;
-		Enemy closestEnemy;
 		int count = 0;
 		for(Enemy e: foodList) {
 			if(count < amount) {
 				closestList.add(e);
 			}
 			else {
-				if(count == amount)
+				if(count == amount) // This is going to be sorting a lot, even if you don't add stuff.
 					sortClosestList();
 				int temp = getDistance(e);
 				if(temp < getDistance(closestList.get(amount))) {

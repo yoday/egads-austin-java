@@ -18,7 +18,7 @@ public class Player extends Entity{
 	public static final int FROG = 4;
 	
 	int AgeState = EGG;
-	int x = 150; int y = 150; int r = 50;
+	float x = 150; float y = 150; int r = 50;
 	private BufferedImage bi;
 	private AudioClip ac;
 	WeakReference<GameCore> gmc;
@@ -31,12 +31,15 @@ public class Player extends Entity{
 	double slide = 0;
 	int growth = 0;
 	int speed = 10;
+	int seqslot = 0; // Where I am in the image loop
+	int nimgs = 4; // Number of images for the current GIF
+	
 	
 	
 	
 	public void draw(Graphics2D g2) {
 		g2.rotate(deltatheta,x + r,y + r);
-		g2.drawImage(bi, x, y, null);
+		g2.drawImage(bi, (int)x, (int)y, null);
 		g2.rotate(-deltatheta,-(x + r),-(y + r));
 	}
 	
@@ -53,7 +56,7 @@ public class Player extends Entity{
 			if(growth >= 20){
 				AgeState = TADPOLE; 
 				growth = 0;
-				speed = 2;
+				speed = 4;
 				imgName = imgHatched;
 				bi = gmc.get().getImage(imgName);				
 			}
@@ -123,7 +126,7 @@ public class Player extends Entity{
 
 	public void init(GameCore gc) {
 		bi = gc.getImage(imgName);
-		ac = gc.getAudio(sndName);
+		//ac = gc.getAudio(sndName);
 		int w = bi.getWidth();
 		int h = bi.getHeight();
 		r = (w>h) ? h/2 : w/2;
@@ -141,12 +144,13 @@ public class Player extends Entity{
 	public void rightturn(boolean isDown){
 		this.right = isDown;
 	}
+	//Need to be in egg to be able to break egg.
 	public void BreakEgg(boolean isDown){
 		if(isDown && AgeState == EGG)
 		growth++;
 	}
 	boolean isColliding(Enemy e){
-		if(e.isColliding(x, y, r)){
+		if(e.isColliding((int)x, (int)y, r)){
 			if(e.isEdible(AgeState)){ // We need to kill the enemy and increase the score and growth of the the player
 			growth += e.getPointsValue();
 			e.kill(AgeState);
