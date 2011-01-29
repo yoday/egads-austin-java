@@ -6,10 +6,7 @@ import java.awt.Point;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javax.swing.JApplet;
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
-import javax.swing.WindowConstants;
+import javax.swing.*;
 
 public class GameMain extends JApplet {
 
@@ -40,27 +37,30 @@ public class GameMain extends JApplet {
 		frame.addKeyListener(core);
 		frame.addMouseListener(core);
 		frame.addMouseMotionListener(core);
-		frame.setPreferredSize(size);
-		frame.setSize(size);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		Point p = GraphicsEnvironment.getLocalGraphicsEnvironment().getCenterPoint();
 		p.x -= GAME_WIDTH/2;
 		p.y -= GAME_HEIGHT/2;
+		this.setPreferredSize(size);
+		frame.add(this);
+		this.requestFocusInWindow();
+		this.requestFocus();
 		frame.setLocation(p);
-		frame.setVisible(true);
-		frame.setResizable(false);
 		frame.pack();
-		frame.requestFocusInWindow();
-		frame.requestFocus();
+		frame.setResizable(false);
+		frame.setVisible(true);
 		setupTimer();
 		core.onInit();
 	}
-	
+	private void repaintGUI(){
+		repaint();
+	}
 	private void setupTimer() {
 		timer = new Timer();
 		TimerTask task = new TimerTask(){
 			public void run() {
 				core.onUpdate(this);
+				repaintGUI();
 			}
 		};
 		timer.scheduleAtFixedRate(task, 1000, 1000 / FRAMES_PER_SEC);

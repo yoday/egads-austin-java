@@ -16,7 +16,6 @@ import javax.swing.JApplet;
 
 
 public class GameCore implements MouseListener, MouseMotionListener, KeyListener {
-
 	private static final long serialVersionUID = 543954373910725885L;
 	
 	public GameCore() {
