@@ -41,10 +41,10 @@ public class EnemyTadpole extends Enemy {
 
 	@Override
 	public void draw(Graphics2D g2) {
-		g2.rotate(deltatheta,cx + r,cy + r);
+		g2.rotate(theta,cx + r,cy + r);
 		//DRAW THE IMAGE
 		//g2.drawImage(bi, (int)x, (int)y, null);
-		g2.rotate(-deltatheta,-(cx + r),-(cy + r));
+		g2.rotate(-theta,-(cx + r),-(cy + r));
 	}
 
 	@Override
