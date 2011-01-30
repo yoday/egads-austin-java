@@ -29,6 +29,7 @@ public class Player extends Entity{
 	public static  BufferedImage [] imgFrog;
 	public static  BufferedImage [] Currentimg = imgEgg;
 	
+	public static  double [] resizeValues = {4,2,1.7,1.8,1.9};
 	public static  int [] EggStates = {0,1,2,3};
 	public static  int [] HatchedStates = {0,2,3,4,5,7,5,4,3,2,1,0,2,3,4,5,7,6,5,4,3,2,0};
 	public static  int [] HindlegStates = {0,1,2,3,4,5,6,7};
@@ -71,10 +72,12 @@ public class Player extends Entity{
 		if(seqslot>=Currentimg.length){
 			seqslot=0;
 		}
+		
 		bi = Currentimg[seqslot];
 		AffineTransform atmp = g2.getTransform();
 		g2.rotate(theta,(cx-gmc.get().getLevel().getScreenULX()) + myR,(cy-gmc.get().getLevel().getScreenULY()) + myR);
-		g2.drawImage(bi, (int)(cx-gmc.get().getLevel().getScreenULX()), (int)(cy-gmc.get().getLevel().getScreenULY()), null);
+		g2.drawImage(bi, (int)(cx-gmc.get().getLevel().getScreenULX()), (int)(cy-gmc.get().getLevel().getScreenULY()),
+				(int)(bi.getWidth()/resizeValues[AgeState]), (int)(bi.getHeight()/resizeValues[AgeState]), null); 
 		g2.setTransform(atmp);
 		if(imageDelay >= maxDelay){
 			imageDelay = 0;
