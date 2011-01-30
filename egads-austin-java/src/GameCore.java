@@ -154,10 +154,6 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 		default : break;
 		}
 		
-		if (key.getKeyCode() == KeyEvent.VK_SPACE) {
-			level.puddleLevel = ++level.puddleLevel % level.puddleBounds.length;
-			//System.out.printf("[%d] = %s%n", level.puddleLevel, level.puddleBounds[level.puddleLevel]);
-		}
 	}
 	
 	public void keyTyped(KeyEvent key) {
