@@ -226,7 +226,12 @@ public class EnemyTadpole extends Enemy {
 
 	@Override
 	public void kill(int condition) {
-		// TODO Auto-generated method stub
+		if(condition ==  -1){
+			theta += Math.PI / 2;
+			target = getClosest(difficulty);
+		}
+		//else
+		//tokill = true;
 
 	}
 	

@@ -292,6 +292,14 @@ public class Level {
 		}
 		
 	}
+	public void HandlePondBounds(){
+		for(Entity e:frogBabies){
+			if(!isInPond(e.getCX(), e.getCY())){
+				e.kill(-1);
+			}
+		}
+		
+	}
 	
 	public synchronized void update(float dt) {
 		if(rand.nextFloat()<probabilityOfSpawn){
@@ -313,6 +321,9 @@ public class Level {
 		viewY = (py<=upBnd)   ? upBnd-GameMain.GAME_HEIGHT/2   : ( (py>=lowBnd  ) ? lowBnd-GameMain.GAME_HEIGHT/2   : (py-GameMain.GAME_HEIGHT/2) ) ;
 		
 		HandleEats();
+		if(centerX != 0){
+		HandlePondBounds();
+		}
 		HandleRemoves();
 		dryness += dndf;
 		if(dryness >= (puddleImages.length-1)){
