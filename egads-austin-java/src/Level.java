@@ -36,10 +36,24 @@ public class Level {
 			"art/improvedwater/water8.png",
 			"art/improvedwater/water9.png",
 	};
+	//length of semimajor axis in x direction
+	int[] semia = new int[]{numDivs*(750/2),numDivs*(680/2),numDivs*(610/2),numDivs*(550/2),numDivs*(490/2),numDivs*(450/2),numDivs*(400/2),numDivs*(360/2),numDivs*(320/2)};
+	//the center of the pond
+	int[] centx = new int[]{410,400,405,400,410,410,400,405,400};
+	//length of semimajor axis in y direction
+	int[] semib = new int[]{numDivs*(580/2),numDivs*(534/2),numDivs*(474/2),numDivs*(436/2),numDivs*(390/2),numDivs*(340/2),numDivs*(314/2),numDivs*(278/2),numDivs*(250/2)};
+	//the y coord of the center of the pond
+	int[] centy = new int[]{284,280,290,290,290,290,300,290,300};
 	private ArrayList<Enemy> edibles = new ArrayList<Enemy>();
 	private Random rand = new Random();
 	private float dryness = 0;
 	
+	public boolean isInPond(int x,int y){
+		float dx2 = x - centerX; dx2 *= dx2;
+		float dy2 = y - centerY; dy2 *= dy2;
+		float val = (dx2/(semimajorA*semimajorA))+(dy2/(semimajorB*semimajorB));
+		return val<=1;
+	}
 	public Level() {
 		puddleBounds = new Circle[puddleImageNames.length];
 		puddleImages = new BufferedImage[puddleImageNames.length];
@@ -132,9 +146,21 @@ public class Level {
 		viewX = (px<=leftBnd) ? leftBnd-GameMain.GAME_WIDTH/2 : ( (px>=rightBnd) ? rightBnd-GameMain.GAME_WIDTH/2 : (px-GameMain.GAME_WIDTH/2) ) ;
 		viewY = (py<=upBnd)   ? upBnd-GameMain.GAME_HEIGHT/2   : ( (py>=lowBnd  ) ? lowBnd-GameMain.GAME_HEIGHT/2   : (py-GameMain.GAME_HEIGHT/2) ) ;
 		dryness += dndf;
+		
+		
 		if(dryness > puddleImages.length){
 			//game over
 		}
+		else{
+			int li = (int)Math.floor(dryness);
+			int ui = (int)Math.floor(dryness+1);
+			float al = ui-dryness;
+			float au = dryness-li;
+			centerX = (int)(al*centx[li] + au*centx[ui]);
+			centerY = (int)(al*centy[li] + au*centy[ui]);
+			semimajorA = (int)(al*semia[li] + au*semib[ui]);
+			semimajorB = (int)(al*semib[li] + au*semib[ui]);
+		}
 	}
-	
+	int centerX,centerY,semimajorA,semimajorB;
 }
