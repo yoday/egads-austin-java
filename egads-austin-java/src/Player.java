@@ -29,6 +29,12 @@ public class Player extends Entity{
 	public static  BufferedImage [] imgFrog;
 	public static  BufferedImage [] Currentimg = imgEgg;
 	
+	public static  int [] EggStates = {0,1,2,3};
+	public static  int [] HatchedStates = {0,2,3,4,5,7,5,4,3,2,1,0,2,3,4,5,7,6,5,4,3,2,0};
+	public static  int [] HindlegStates = {0,1,2,3,4,5,6,7};
+	public static  int [] AlmostFrogStates = {0,1,2,3};
+	public static int  [] frogStates = {0,1,2,3,4,5,6,7,8,9,10};
+	
 	public static final int EGG = 0;
 	public static final int TADPOLE = 1;
 	public static final int HINDLEGS = 2;
@@ -198,7 +204,8 @@ public class Player extends Entity{
 				gc.getImage("art/animations/frog/5frog_2.png"),gc.getImage("art/animations/frog/5frog_3.png"),
 				gc.getImage("art/animations/frog/5frog_4.png"),gc.getImage("art/animations/frog/5frog_5.png"),
 				gc.getImage("art/animations/frog/5frog_6.png"),gc.getImage("art/animations/frog/5frog_7.png"),
-				gc.getImage("art/animations/frog/5frog_8.png"),gc.getImage("art/animations/frog/5frog_9.png")};
+				gc.getImage("art/animations/frog/5frog_8.png"),gc.getImage("art/animations/frog/5frog_9.png"),
+				gc.getImage("art/animations/frog/5frog_10.png"),gc.getImage("art/animations/frog/5frog_11.png")};
 		Currentimg = imgEgg;
 		bi = Currentimg[0];
 		int w = bi.getWidth();
@@ -251,13 +258,12 @@ public class Player extends Entity{
 	public Player(ScoreBoard sc){
 		score = sc;
 	}
-	
-	public boolean isInBounds(int levelWidth, int levelHeight){
-		int b2 = (levelHeight/2) + r; b2*= b2;
-		int a2 = (levelWidth/2) + r; a2*= a2;
-		int dx2 = (int) (x - centerX); dx2 *= dx2;
-		int dy2 = (int) (y - centerY); dy2 *= dy2;
-	return (b2*dx2 + a2*dy2 <= a2*b2);
+	public boolean eatFood(int Foodx,int Foody,int Foodr){
+		int dx2 = (int) (Foodx-x); dx2 *= dx2;
+		int dy2 = (int) (Foody-y); dy2 *= dy2;
+		int sr2 = (Foodr + r); sr2 *= sr2;
+		int sd = dx2+dy2;
+		return sr2 <= sd;
 	}
 	
 }
