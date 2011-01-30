@@ -6,14 +6,17 @@ import java.util.*;
 
 public class Level {
 	private static final int numDivs = 3;
-	private int sourceWidth = GameMain.GAME_WIDTH/3;
-	private int sourceHeight = GameMain.GAME_HEIGHT/3;
+	private static final int initSpawn = 100;
+	private int sourceWidth = GameMain.GAME_WIDTH/numDivs;
+	private int sourceHeight = GameMain.GAME_HEIGHT/numDivs;
 	private int destWidth = GameMain.GAME_WIDTH;
 	private int destHeight = GameMain.GAME_HEIGHT;
 	private int leftBnd = GameMain.GAME_WIDTH/2;
 	private int rightBnd = GameMain.GAME_WIDTH*numDivs - GameMain.GAME_WIDTH/2;
 	private int upBnd = GameMain.GAME_HEIGHT/2;
 	private int lowBnd = GameMain.GAME_HEIGHT*numDivs - GameMain.GAME_HEIGHT/2;
+	private int worldWidth = numDivs*GameMain.GAME_WIDTH;
+	private int worldHeight = numDivs*GameMain.GAME_HEIGHT;
 	GameCore core;
 	int viewX;
 	int viewY;
@@ -34,6 +37,7 @@ public class Level {
 			"art/improvedwater/water9.png",
 	};
 	private ArrayList<Enemy> edibles = new ArrayList<Enemy>();
+	private Random rand = new Random();
 	
 	public Level() {
 		puddleBounds = new Circle[puddleImageNames.length];
@@ -62,8 +66,26 @@ public class Level {
 		}
 		sb = new ScoreBoard();
 		player = new Player(sb);
+		int curLv = 0;
+		for(int i = 0;i<initSpawn;i++){
+			int fx = rand.nextInt(worldWidth);
+			int fy = rand.nextInt(worldHeight);
+			int ed = 1;
+			switch(curLv){
+			case 0: ed = Food.TADPOLE; break;
+			case 1: ed = Food.HINDLEGS; break;
+			case 2: ed = Food.NEARFROG; break;
+			case 3: ed = Food.FROG; break;
+			}
+			edibles.add(new Food(ed,fx,fy));
+			curLv = (curLv + 1)%4;
+		}
+		
 		sb.init(core);
 		player.init(core);
+		for(Enemy e:edibles){
+			e.init(core);
+		}
 		core.setPlayer(player);
 		Entity.setPlayer(player);
 	}
@@ -82,14 +104,18 @@ public class Level {
 		g.setTransform(savedTransform);
 		
 		player.draw(g);
-		
+		for(Enemy e:edibles){
+			e.draw(g);
+		}
 		sb.draw(g);
 	}
 	
 	public void update(float dt) {
 		player.update();
-		
 		sb.update();
+		for(Enemy e:edibles){
+			e.update();
+		}
 		int px = player.getCX();
 		int py = player.getCY();
 		//keep the view away from the corners
