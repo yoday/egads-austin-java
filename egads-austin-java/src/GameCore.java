@@ -38,7 +38,9 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 	}
 	
 	Level level;
-	
+	public Level getLevel(){
+		return level;
+	}
 	public void onInit() {
 		Entity.setPlayer(p);
 		p.init(this);
