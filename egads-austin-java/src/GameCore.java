@@ -35,6 +35,7 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 	private HashMap<String, BufferedImage> imageCache;
 	private HashMap<String, AudioClip> audioCache;
 	Player p;
+	Button credits,newgame,exit;
 	public GameCore() {
 		imageCache = new HashMap<String, BufferedImage>();
 		audioCache = new HashMap<String, AudioClip>();
@@ -51,6 +52,27 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 	public void onInit() {
 		menuscreen = this.getImage("art/screens/title.png");
 		gameoverscreen = this.getImage("art/screens/game-over.png");
+		newgame = new Button(this.getImage("art/menu/newgame.png"),this.getImage("art/menu/newgame-selected.png"),this.getImage("art/menu/newgame-selected.png"),new PressListener(){
+			public void buttonPressed(){
+				
+			}
+		});
+		newgame.init(null);
+		newgame.centerOn(675,30);
+		credits = new Button(this.getImage("art/menu/credits.png"),this.getImage("art/menu/credits-selected.png"),this.getImage("art/menu/credits-selected.png"),new PressListener(){
+			public void buttonPressed(){
+				
+			}
+		});
+		credits.init(null);
+		credits.centerOn(704,90);
+		exit = new Button(this.getImage("art/menu/exit.png"),this.getImage("art/menu/exit-selected.png"),this.getImage("art/menu/exit-selected.png"),new PressListener(){
+			public void buttonPressed(){
+				
+			}
+		});
+		exit.init(null);
+		exit.centerOn(738,152);
 		level.init(this);
 	}
 	public void onRender(Graphics2D g) {
@@ -64,6 +86,9 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 			else{
 				if(gameMode==MENU){
 					g.drawImage(menuscreen,0,0,null);
+					newgame.render(g);
+					credits.render(g);
+					exit.render(g);
 				}
 			}
 		}
@@ -212,7 +237,9 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 		//level.cursor.x = evt.getPoint().x;
 		//level.cursor.y = evt.getPoint().y;
 		if(gameMode==MENU){
-			
+			newgame.onMouseMove(evt.getX(),evt.getY());
+			credits.onMouseMove(evt.getX(),evt.getY());
+			exit.onMouseMove(evt.getX(),evt.getY());
 		}
 	}
 	
@@ -231,17 +258,21 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 		
 	}
 	
-	public void mousePressed(MouseEvent arg0) {
+	public void mousePressed(MouseEvent evt) {
 		// TODO Auto-generated method stub
 		if(gameMode==MENU){
-			
+			newgame.onMouseDown(evt.getX(),evt.getY());
+			credits.onMouseDown(evt.getX(),evt.getY());
+			exit.onMouseDown(evt.getX(),evt.getY());
 		}
 	}
 	
-	public void mouseReleased(MouseEvent arg0) {
+	public void mouseReleased(MouseEvent evt) {
 		// TODO Auto-generated method stub
 		if(gameMode==MENU){
-			
+			newgame.onMouseUp(evt.getX(),evt.getY());
+			credits.onMouseUp(evt.getX(),evt.getY());
+			exit.onMouseUp(evt.getX(),evt.getY());
 		}
 	}
 	
