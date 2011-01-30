@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import java.util.*;
 
 public class Level {
-	private static final float probabilityOfSpawn = 0.1f;
+	private static final float probabilityOfSpawn = 0.06f;
 	int curSpTp = 0;
 	private static final int numDivs = 3;
 	private static final int initSpawn = 100;
@@ -54,11 +54,9 @@ public class Level {
 	private ArrayList<Entity> entities = new ArrayList<Entity>();
 	
 	public boolean isInPond(int x,int y){
-		float dx2 = x - centerX;  dx2 *= dx2;
-		float dy2 = y - centerY;  dy2 *= dy2;
+		float dx2 = x - centerX; dx2 *= dx2;
+		float dy2 = y - centerY; dy2 *= dy2;
 		float val = (dx2/(semimajorA*semimajorA))+(dy2/(semimajorB*semimajorB));
-		
-	
 		return val<=1;
 	}
 	public void getRectification(int x,int y,int[] dxdy){
@@ -332,5 +330,4 @@ public class Level {
 		}
 	}
 	int centerX,centerY,semimajorA,semimajorB;
-	
 }

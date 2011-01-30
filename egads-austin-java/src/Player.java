@@ -93,7 +93,7 @@ public class Player extends Entity{
 	
 	public void kill(int condition) {
 		tokill = true;
-		
+		gmc.get().gameOver();
 	}
 
 	
