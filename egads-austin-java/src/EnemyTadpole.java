@@ -32,7 +32,7 @@ public class EnemyTadpole extends Enemy {
 	double theta = (Math.PI * 3) / 2;
 	double destinationTheta = 0;
 	int growth = 0;
-	int speed = 10;
+	int speed = 0;
 	int r = 50;
 	int difficulty;
 	int eggTimer = 0;
@@ -76,6 +76,10 @@ public class EnemyTadpole extends Enemy {
 
 	@Override
 	public void update() {
+		if(theta >= Math.PI*2)
+			theta -= Math.PI*2;
+		if(theta < 0)
+			theta += Math.PI*2;
 		switch(AgeState){
 		case EGG: 
 			if(growth >= 20){
@@ -160,22 +164,42 @@ public class EnemyTadpole extends Enemy {
 		if( target == null )
 			target = getClosest(difficulty);
 		
+		if(isColliding(target))
+			target = getClosest(difficulty);
+		
 		destinationTheta = Math.abs(Math.atan((1.0*(target.cy - cy))/(1.0*(target.cx - cx))));
-		if(destinationTheta > theta) {
-			if(destinationTheta - theta <= Math.PI && destinationTheta - theta >= 0)
-				theta += Math.PI/64;
-			else
-				theta -= Math.PI/64;
+		System.out.println(destinationTheta + " " + theta + "\n" + target.cx + "," + target.cy);
+		if(!approximateRadians(theta,destinationTheta)) {
+			if(destinationTheta > theta) {
+				if(destinationTheta - theta <= Math.PI && destinationTheta - theta >= 0)
+					theta += Math.PI/64;
+				else
+					theta -= Math.PI/64;
+			}
+			else {
+				if(theta - destinationTheta <= Math.PI && theta - destinationTheta >= 0)
+					theta -= Math.PI/64;
+				else
+					theta += Math.PI/64;
+			}
 		}
-		else {
-			if(theta - destinationTheta <= Math.PI && theta - destinationTheta >= 0)
-				theta -= Math.PI/64;
-			else
-				theta += Math.PI/64;
+		else{
+			theta = destinationTheta;
 		}
 		
-		cx += speed*Math.cos(theta);
-		cy += speed*Math.sin(theta);
+		cx += speed*Math.cos(theta + 3* Math.PI/2);
+		cy += speed*Math.sin(theta + 3* Math.PI/2);
+	}
+	
+	private boolean approximateRadians(double a, double b)
+	{
+		double halfRotation = Math.PI/64;
+		if(a == b)
+			return true;
+		if( (a < b && a + halfRotation > b) ||  
+			(a > b && a - halfRotation < b))
+			return true;
+		return false;
 	}
 
 	@Override
@@ -183,7 +207,12 @@ public class EnemyTadpole extends Enemy {
 		// TODO Auto-generated method stub
 
 	}
-
+	
+	public void eat(Entity e)
+	{
+		growth += e.getPointsValue();
+	}
+	
 	@Override
 	public void init(GameCore gc) {
 		imgEgg = new BufferedImage [] {gc.getImage("art/animations/egg/1egg_1.png"),
