@@ -43,6 +43,7 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 		Entity.setPlayer(p);
 		p.init(this);
 		sb.init(this);
+		level.init(this);
 	}
 	public void onRender(Graphics2D g) {
 		level.render(g);
