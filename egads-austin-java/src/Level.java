@@ -48,6 +48,7 @@ public class Level {
 	private Random rand = new Random();
 	private float dryness = 0;
 	
+	private ArrayList<Entity> frogBabies = new ArrayList<Entity>();
 	private ArrayList<Entity> entities = new ArrayList<Entity>();
 	
 	public boolean isInPond(int x,int y){
@@ -83,7 +84,7 @@ public class Level {
 		}
 		sb = new ScoreBoard();
 		player = new Player(sb);
-		entities.add(player);
+		frogBabies.add(player);
 		
 		int curLv = 0;
 		for(int i = 0;i<initSpawn;i++){
@@ -99,26 +100,27 @@ public class Level {
 			edibles.add(new Food(ed,fx,fy));
 			curLv = (curLv + 1)%4;
 		}
-		entities.add(new EnemyTadpole((int)player.cx + 200 + rand.nextInt(150),
-									  (int)player.cy + 200 + rand.nextInt(150),
-									  entities,
-									  30));
-		entities.get(entities.size() - 1).init(core);
-		entities.add(new EnemyTadpole((int)player.cx - 200 - rand.nextInt(150),
-				  					  (int)player.cy + 200 + rand.nextInt(150),
-				  					  entities,
-				  					  30));
-		entities.get(entities.size() - 1).init(core);
-		entities.add(new EnemyTadpole((int)player.cx + 200 + rand.nextInt(150),
-				  					  (int)player.cy - 200 - rand.nextInt(150),
-				  					  entities,
-				  					  30));
-		entities.get(entities.size() - 1).init(core);
-		entities.add(new EnemyTadpole((int)player.cx - 200 - rand.nextInt(150),
-				  					  (int)player.cy - 200 - rand.nextInt(150),
-				  					  entities,
-				  					  30));
-		entities.get(entities.size() - 1).init(core);
+//		frogBabies.add(new EnemyTadpole((int)player.cx + 200 + rand.nextInt(150),
+//									  (int)player.cy + 200 + rand.nextInt(150),
+//									  entities,
+//									  30));
+//		frogBabies.get(frogBabies.size() - 1).init(core);
+//		frogBabies.add(new EnemyTadpole((int)player.cx - 200 - rand.nextInt(150),
+//				  					  (int)player.cy + 200 + rand.nextInt(150),
+//				  					  entities,
+//				  					  30));
+//		frogBabies.get(frogBabies.size() - 1).init(core);
+//		frogBabies.add(new EnemyTadpole((int)player.cx + 200 + rand.nextInt(150),
+//				  					  (int)player.cy - 200 - rand.nextInt(150),
+//				  					  entities,
+//				  					  30));
+//		frogBabies.get(frogBabies.size() - 1).init(core);
+//		frogBabies.add(new EnemyTadpole((int)player.cx - 200 - rand.nextInt(150),
+//				  					  (int)player.cy - 200 - rand.nextInt(150),
+//				  					  entities,
+//				  					  30));
+//		frogBabies.get(frogBabies.size() - 1).init(core);
+		entities.addAll(frogBabies);
 		entities.addAll(edibles);
 		sb.init(core);
 		player.init(core);
@@ -157,6 +159,37 @@ public class Level {
 		sb.draw(g);
 	}
 	
+	public void HandleEats(){
+		for(Entity p:frogBabies){
+			for(Entity e:entities){
+				if(! p.equals(e)){ //Can't eat yourself silly.
+					if(p instanceof Player){
+						if(e.isEdible(((Player)p).AgeState) && p.isColliding(e.cx,e.cy, e.myR))
+						((Player)p).eat(e);
+					}
+					else{ // it is an instance of EnemyTadPole
+						if(e.isEdible(((EnemyTadpole)p).AgeState) && p.isColliding(e.cx,e.cy, e.myR))
+							((EnemyTadpole)p).eat(e);
+					}
+					}
+				}
+		
+		}
+		
+	}
+	public void HandleRemoves(){
+		ArrayList<Entity> temp = new ArrayList<Entity>();
+		for(Entity e:entities){
+			if(e.tokill){
+				temp.add(e);
+			}
+		}
+		for(Entity e:temp){
+			entities.remove(e);
+		}
+		
+	}
+	
 	public void update(float dt) {
 		//player.update();
 		sb.update();
@@ -169,7 +202,8 @@ public class Level {
 		viewX = (px<=leftBnd) ? leftBnd-GameMain.GAME_WIDTH/2 : ( (px>=rightBnd) ? rightBnd-GameMain.GAME_WIDTH/2 : (px-GameMain.GAME_WIDTH/2) ) ;
 		viewY = (py<=upBnd)   ? upBnd-GameMain.GAME_HEIGHT/2   : ( (py>=lowBnd  ) ? lowBnd-GameMain.GAME_HEIGHT/2   : (py-GameMain.GAME_HEIGHT/2) ) ;
 		dryness += dndf;
-		
+		HandleEats();
+		HandleRemoves();
 		
 		if(dryness > puddleImages.length){
 			//game over

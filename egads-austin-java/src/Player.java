@@ -82,13 +82,14 @@ public class Player extends Entity{
 	}
 	
 	public void kill(int condition) {
-		// TODO Auto-generated method stub
+		tokill = true;
 		
 	}
 
 	
 	//Key Cases that should do nothing: UP && DOWN || LEFT && RIGHT
 	public void update() {
+		System.out.println(score.score);
 		switch(AgeState){
 		case EGG: 
 			if(needEvolve){
@@ -257,6 +258,10 @@ public class Player extends Entity{
 	private ScoreBoard score;
 	public Player(ScoreBoard sc){
 		score = sc;
+	}
+	public void eat(Entity e){
+		score.addPts(e.getPointsValue());
+		e.kill(AgeState);
 	}
 	public boolean eatFood(int Foodx,int Foody,int Foodr){
 		int dx2 = (int) (Foodx-cx); dx2 *= dx2;

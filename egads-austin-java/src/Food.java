@@ -73,6 +73,7 @@ public class Food extends Enemy{
 	public void update(){}
 	public void kill(int condition){
 		ac.play();
+		tokill = true;
 	}
 	public void init(GameCore gc){
 		bi = gc.getImage(imgnm);

@@ -2,6 +2,7 @@ import java.awt.Graphics2D;
 
 
 public abstract class Entity {
+	protected boolean tokill;
 	protected static Player p;
 	protected int cx,cy,myR;
 	public static void setPlayer(Player newP){
