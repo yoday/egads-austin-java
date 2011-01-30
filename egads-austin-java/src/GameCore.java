@@ -27,9 +27,10 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 	private static final int MAINGAME = 1;
 	private static final int GAMEOVER = 2;
 	private static final int RUNFROGGYRUN = 3;
-	private static final int CREDITS = 4;
+	private static final int INTERMISSION = 4;
+	private static final int CREDITS = 5;
 	private int gameMode = MENU;
-	BufferedImage menuscreen,gameoverscreen;
+	BufferedImage menuscreen,gameoverscreen,intermisscreen,creditsscreen;
 	private static final long serialVersionUID = 543954373910725885L;
 	
 	private HashMap<String, BufferedImage> imageCache;
@@ -66,6 +67,8 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 		music.loop();
 		menuscreen = this.getImage("art/screens/title.png");
 		gameoverscreen = this.getImage("art/screens/game-over.png");
+		intermisscreen = this.getImage("art/screens/cut_goodluck.png");
+		creditsscreen = this.getImage("art/screens/credits.png");
 		newgame = new Button(this.getImage("art/menu/newgame.png"),this.getImage("art/menu/newgame-selected.png"),this.getImage("art/menu/newgame-selected.png"),new PressListener(){
 			public void buttonPressed(){
 				if(!first){
@@ -114,6 +117,16 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 					if(gameMode==RUNFROGGYRUN){
 						frogrun.render(g);
 					}
+					else{
+						if(gameMode==INTERMISSION){
+							g.drawImage(intermisscreen,0,0,null);
+						}
+						else{
+							if(gameMode==CREDITS){
+								g.drawImage(creditsscreen,0,0,null);
+							}
+						}
+					}
 				}
 			}
 		}
@@ -137,7 +150,7 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 							frogrun.update();
 						}
 						else{
-							gameMode = MAINGAME;
+							gameMode = INTERMISSION;
 							frogrun.reset();
 						}
 					}
@@ -278,12 +291,27 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 			exit.onMouseMove(evt.getX(),evt.getY());
 		}
 	}
-	
+	boolean credClick = false;
 	public void mouseClicked(MouseEvent arg0) {
 		if(gameMode==GAMEOVER){
 			gameMode = MENU;
 		}
-		
+		else{
+			if(gameMode==INTERMISSION){
+				gameMode = MAINGAME;
+			}
+			else{
+				if(gameMode == CREDITS){
+					if(credClick){
+						gameMode = MENU;
+						credClick = false;
+					}
+					else{
+						credClick = true;
+					}
+				}
+			}
+		}
 	}
 	
 	public void mouseEntered(MouseEvent arg0) {
