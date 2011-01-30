@@ -1,5 +1,4 @@
-import java.awt.Color;
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.*;
@@ -7,6 +6,7 @@ import java.util.*;
 public class Level {
 	private static final int numDivs = 3;
 	private static final int initSpawn = 100;
+	private static final float dndf = 0.001f;
 	private int sourceWidth = GameMain.GAME_WIDTH/numDivs;
 	private int sourceHeight = GameMain.GAME_HEIGHT/numDivs;
 	private int destWidth = GameMain.GAME_WIDTH;
@@ -38,6 +38,7 @@ public class Level {
 	};
 	private ArrayList<Enemy> edibles = new ArrayList<Enemy>();
 	private Random rand = new Random();
+	private float dryness = 0;
 	
 	public Level() {
 		puddleBounds = new Circle[puddleImageNames.length];
@@ -95,18 +96,27 @@ public class Level {
 		AffineTransform savedTransform = g.getTransform();
 		g.translate(0, 0);
 		g.setColor(Color.BLACK);
+		int li = (int)Math.floor(dryness);
+		int ui = (int)Math.floor(dryness+1);
+		float al = ui-dryness;
+		float au = dryness-li;
+		Composite tmpc = g.getComposite();
+		//g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP,al));
+		g.drawImage(puddleImages[li],0,0,destWidth,destHeight, viewX/3, viewY/3,sourceWidth+viewX/3,sourceHeight+viewY/3, null);
+		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP,au));
+		g.drawImage(puddleImages[ui],0,0,destWidth,destHeight, viewX/3, viewY/3,sourceWidth+viewX/3,sourceHeight+viewY/3, null);
+		g.setComposite(tmpc);
+		//puddleBounds[puddleLevel].render(g);
 		
-		g.drawImage(puddleImages[puddleLevel],0,0,destWidth,destHeight, viewX/3, viewY/3,sourceWidth+viewX/3,sourceHeight+viewY/3, null);
-		puddleBounds[puddleLevel].render(g);
-		
-		cursor.render(g);
+		//cursor.render(g);
 		
 		g.setTransform(savedTransform);
 		
-		player.draw(g);
+		
 		for(Enemy e:edibles){
 			e.draw(g);
 		}
+		player.draw(g);
 		sb.draw(g);
 	}
 	
@@ -121,6 +131,10 @@ public class Level {
 		//keep the view away from the corners
 		viewX = (px<=leftBnd) ? leftBnd-GameMain.GAME_WIDTH/2 : ( (px>=rightBnd) ? rightBnd-GameMain.GAME_WIDTH/2 : (px-GameMain.GAME_WIDTH/2) ) ;
 		viewY = (py<=upBnd)   ? upBnd-GameMain.GAME_HEIGHT/2   : ( (py>=lowBnd  ) ? lowBnd-GameMain.GAME_HEIGHT/2   : (py-GameMain.GAME_HEIGHT/2) ) ;
+		dryness += dndf;
+		if(dryness > puddleImages.length){
+			//game over
+		}
 	}
 	
 }
