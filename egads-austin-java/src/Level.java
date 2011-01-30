@@ -103,6 +103,68 @@ public class Level {
 		
 		init(core);
 	}
+	public void nextStage(GameCore core){
+		dryness = 0;
+		entities = new ArrayList<Entity>();
+		edibles = new ArrayList<Enemy>();
+		frogBabies = new ArrayList<Entity>();
+		this.core = core;
+		float centerX = GameMain.GAME_WIDTH/2;
+		float centerY = GameMain.GAME_HEIGHT/2;
+		float SCALE = 25;
+		float lastRad = GameMain.GAME_HEIGHT/2 + 40;
+		for (int i = 0; i < puddleImageNames.length; i++) {
+			puddleImages[i] = core.getImage(puddleImageNames[i]);
+			puddleBounds[i] = new Circle(centerX, centerY, lastRad -= SCALE);
+		}
+		//sb = new ScoreBoard();
+		player = new Player(sb);
+		frogBabies.add(player);
+		
+		int curLv = 0;
+		for(int i = 0;i<initSpawn;i++){
+			int fx = rand.nextInt(worldWidth);
+			int fy = rand.nextInt(worldHeight);
+			int ed = 1;
+			switch(curLv){
+			case 0: ed = Food.TADPOLE; break;
+			case 1: ed = Food.HINDLEGS; break;
+			case 2: ed = Food.NEARFROG; break;
+			case 3: ed = Food.FROG; break;
+			}
+			edibles.add(new Food(ed,fx,fy));
+			curLv = (curLv + 1)%4;
+		}
+		frogBabies.add(new EnemyTadpole((int)player.cx + 200 + rand.nextInt(150),
+									  (int)player.cy + 200 + rand.nextInt(150),
+									  entities,
+									  5));
+		frogBabies.get(frogBabies.size() - 1).init(core);
+		frogBabies.add(new EnemyTadpole((int)player.cx - 200 - rand.nextInt(150),
+				  					  (int)player.cy + 200 + rand.nextInt(150),
+				  					  entities,
+				  					  5));
+		frogBabies.get(frogBabies.size() - 1).init(core);
+		frogBabies.add(new EnemyTadpole((int)player.cx + 200 + rand.nextInt(150),
+				  					  (int)player.cy - 200 - rand.nextInt(150),
+				  					  entities,
+				  					  5));
+		frogBabies.get(frogBabies.size() - 1).init(core);
+		frogBabies.add(new EnemyTadpole((int)player.cx - 200 - rand.nextInt(150),
+				  					  (int)player.cy - 200 - rand.nextInt(150),
+				  					  entities,
+				  					  5));
+		frogBabies.get(frogBabies.size() - 1).init(core);
+		entities.addAll(frogBabies);
+		entities.addAll(edibles);
+		//sb.init(core);
+		player.init(core);
+		for(Enemy e:edibles){
+			e.init(core);
+		}
+		core.setPlayer(player);
+		Entity.setPlayer(player);
+	}
 	public void init(GameCore core) {
 		dryness = 0;
 		entities.removeAll(entities);

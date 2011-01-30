@@ -45,7 +45,7 @@ public class Player extends Entity{
 	int AgeState = EGG;
 	int centerX = 0; //center of the level 
 	int centerY = 0; //ceneter of the level
-	float cx = 400; float cy  = 400; int myR = 50;
+	float cx = 1200; float cy  = 900; int myR = 50;
 	private BufferedImage bi;
 	private AudioClip ac;
 	WeakReference<GameCore> gmc;
@@ -67,7 +67,11 @@ public class Player extends Entity{
 		return (int)(cy+myR);
 	}
 	
-	
+	public void nextStateEminent(){
+		AgeState = EGG;
+		cx = 1200;
+		cy = 900;
+	}
 	public synchronized void draw(Graphics2D g2) {
 		if(seqslot>=Currentimg.length){
 			seqslot=0;
@@ -159,11 +163,13 @@ public class Player extends Entity{
 				speed = 0;
 				Currentimg = imgEgg;
 				seqslot = 0;
-				needEvolve = false;
+				//needEvolve = false;
 				bi = Currentimg[0];
 				int w = bi.getWidth();
 				int h = bi.getHeight();
 				myR = (w>h) ? h/2 : w/2;
+				cx = 1200;
+				cy = 900;
 			}
 		break;
 		}
