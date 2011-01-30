@@ -43,12 +43,13 @@ public class Player extends Entity{
 	String sndName;
 	boolean up,left,down,right,space;
 	int direction = 0;
-	double theta = 3*Math.PI /2;
-	double deltatheta = 0;
+	double theta = 0;
 	int growth = 0;
 	int speed = 10;
 	int seqslot = 0; // Where I am in the image loop
 	int nimgs = 4; // Number of images for the current GIF; There are 4 images for the Egg so we start with that.
+	int imageDelay = 0;
+	int maxDelay = 10;
 	
 	
 	
@@ -56,10 +57,15 @@ public class Player extends Entity{
 	public void draw(Graphics2D g2) {
 		bi = Currentimg[seqslot];
 		AffineTransform atmp = g2.getTransform();
-		g2.rotate(deltatheta,x + r,y + r);
+		g2.rotate(theta,x + r,y + r);
 		g2.drawImage(bi, (int)x, (int)y, null);
 		g2.setTransform(atmp);
+		if(imageDelay >= maxDelay){
+			imageDelay = 0;
 		if(seqslot < Currentimg.length -1) seqslot ++; else seqslot = 0;
+		}
+		else
+			imageDelay++;
 	}
 	
 	public void kill(int condition) {
@@ -153,16 +159,14 @@ public class Player extends Entity{
 			direction = 0;
 		}
 		if(left && !right){
-			theta -= Math.PI/16;
-			deltatheta +=  - Math.PI/16;
+			theta -= Math.PI/64;
 		}
 		else if(right && !left){
-			theta += Math.PI/16;
-			deltatheta += Math.PI/16;
+			theta += Math.PI/64;
 		}
 		//Now for the movement.
-		x += direction*speed*Math.cos(theta);
-		y += direction*speed*Math.sin(theta);
+		x += direction*speed*Math.cos(theta + 3* Math.PI/2);
+		y += direction*speed*Math.sin(theta + 3* Math.PI/2);
 		
 		
 		
