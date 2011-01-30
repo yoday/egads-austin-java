@@ -168,7 +168,6 @@ public class EnemyTadpole extends Enemy {
 			target = getClosest(difficulty);
 		
 		destinationTheta = Math.abs(Math.atan((1.0*(target.cy - cy))/(1.0*(target.cx - cx))));
-		System.out.println(destinationTheta + " " + theta + "\n" + target.cx + "," + target.cy);
 		if(!approximateRadians(theta,destinationTheta)) {
 			if(destinationTheta > theta) {
 				if(destinationTheta - theta <= Math.PI && destinationTheta - theta >= 0)
