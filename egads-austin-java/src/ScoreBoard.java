@@ -64,7 +64,7 @@ public class ScoreBoard extends Entity{
 		if(curSt>=4){
 			gmc.get().alertToCutscene();
 			curSt = 0;
-			
+			curPt = toNextState[curSt];
 		}
 		if(over>0){
 		
