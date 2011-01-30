@@ -54,7 +54,10 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 	}
 	GameCore gcref = this;
 	boolean first = true;
+	AudioClip music;
 	public void onInit() {
+		music = this.getAudio("/soundage/froghopharmony.wav");
+		music.loop();
 		menuscreen = this.getImage("art/screens/title.png");
 		gameoverscreen = this.getImage("art/screens/game-over.png");
 		newgame = new Button(this.getImage("art/menu/newgame.png"),this.getImage("art/menu/newgame-selected.png"),this.getImage("art/menu/newgame-selected.png"),new PressListener(){

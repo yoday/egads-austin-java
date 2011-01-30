@@ -169,8 +169,8 @@ public class EnemyTadpole extends Enemy {
 		
 		if(isColliding(target))
 			target = getClosest(difficulty);
-		
-		destinationTheta = Math.abs(Math.atan((1.0*(target.cy - cy))/(1.0*(target.cx - cx))));
+		System.out.println(target.getCX() + " " + target.getCY());
+		destinationTheta = Math.abs(Math.atan((1.0*(target.getCY() - cy))/(1.0*(target.getCX() - cx))));
 		if(!approximateRadians(theta,destinationTheta)) {
 			if(destinationTheta > theta) {
 				if(destinationTheta - theta <= Math.PI && destinationTheta - theta >= 0)
@@ -188,6 +188,8 @@ public class EnemyTadpole extends Enemy {
 		else{
 			theta = destinationTheta;
 		}
+		
+		//System.out.println(destinationTheta + " " + theta);
 		
 		cx += speed*Math.cos(theta + 3* Math.PI/2);
 		cy += speed*Math.sin(theta + 3* Math.PI/2);
@@ -213,6 +215,7 @@ public class EnemyTadpole extends Enemy {
 	public void eat(Entity e)
 	{
 		growth += e.getPointsValue();
+		e.kill(AgeState);
 		target = getClosest(difficulty);
 	}
 	
@@ -299,7 +302,7 @@ public class EnemyTadpole extends Enemy {
 	
 	//Returns the x^2+ y^2 distance of the enemy
 	public int getDistance(Entity e) {
-		System.out.println(this.cx + " " + e.getCX() + " " + this.cy + " " + e.getCY());
+		//System.out.println(this.cx + " " + e.getCX() + " " + this.cy + " " + e.getCY());
 		int tempx = (this.cx - e.getCX()); tempx *= tempx;
 		int tempy = (this.cy - e.getCY()); tempy *= tempy;
 		return tempx + tempy;
