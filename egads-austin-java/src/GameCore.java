@@ -36,11 +36,12 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 	private HashMap<String, AudioClip> audioCache;
 	Player p;
 	Button credits,newgame,exit;
+	Cutscene frogrun;
 	public GameCore() {
 		imageCache = new HashMap<String, BufferedImage>();
 		audioCache = new HashMap<String, AudioClip>();
 		level = new Level();
-		
+		frogrun = new Cutscene();
 	}
 	public void gameOver(){
 		gameMode = GAMEOVER;
@@ -56,6 +57,7 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 	boolean first = true;
 	AudioClip music;
 	public void onInit() {
+		frogrun.init(this);
 		music = this.getAudio("/soundage/froghopharmony.wav");
 		music.loop();
 		menuscreen = this.getImage("art/screens/title.png");
@@ -104,6 +106,11 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 					credits.render(g);
 					exit.render(g);
 				}
+				else{
+					if(gameMode==RUNFROGGYRUN){
+						frogrun.render(g);
+					}
+				}
 			}
 		}
 	}
@@ -119,6 +126,16 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 			else{
 				if(gameMode == GAMEOVER){
 					
+				}
+				else{
+					if(gameMode==RUNFROGGYRUN){
+						if(!frogrun.isDone()){
+							frogrun.update();
+						}
+						else{
+							gameMode = MAINGAME;
+						}
+					}
 				}
 			}
 		}

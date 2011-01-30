@@ -57,6 +57,34 @@ public class Level {
 		float val = (dx2/(semimajorA*semimajorA))+(dy2/(semimajorB*semimajorB));
 		return val<=1;
 	}
+	public void getRectification(int x,int y,int[] dxdy){
+		int dx = centerX-x;
+		int dy = centerY-y;
+		int ox =x + dx/2;
+		int oy = y + dy/2;
+		int nx = x;
+		int ny = y;
+		int dif = 10;
+		float outd = 0;
+		float ind = 1;
+		float midd = 0.5f;
+		while(dif>3){
+			midd = (outd+ind)/2;
+			if(isInPond((int)(midd*dx)+x,(int)(midd*y)+y)){
+				ind = midd;
+			}
+			else{
+				outd = midd;
+			}
+			nx = (int)(dx*(outd+ind)/2+x);
+			ny = (int)(dy*(outd+ind)/2+y);
+			dif = Math.abs(nx-ox) + Math.abs(ny-oy);
+			ox = nx;
+			oy = ny;
+		}
+		dxdy[0] = (int)(midd*dx);
+		dxdy[1] = (int)(midd*dy);
+	}
 	public Level() {
 		puddleBounds = new Circle[puddleImageNames.length];
 		puddleImages = new BufferedImage[puddleImageNames.length];
