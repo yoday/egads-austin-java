@@ -20,7 +20,7 @@ import javax.swing.*;
 public class GameMain extends JApplet {
 
 	private static final long serialVersionUID = -925518549680460124L;
-	
+	//tocom
 	//global variables
 	public static final int FRAMES_PER_SEC = 60;
 	public static final String GAME_NAME = "http://code.google.com/p/egads-austin-java/";
