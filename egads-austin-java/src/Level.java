@@ -110,22 +110,22 @@ public class Level {
 		frogBabies.add(new EnemyTadpole((int)player.cx + 200 + rand.nextInt(150),
 									  (int)player.cy + 200 + rand.nextInt(150),
 									  entities,
-									  30));
+									  5));
 		frogBabies.get(frogBabies.size() - 1).init(core);
 		frogBabies.add(new EnemyTadpole((int)player.cx - 200 - rand.nextInt(150),
 				  					  (int)player.cy + 200 + rand.nextInt(150),
 				  					  entities,
-				  					  30));
+				  					  5));
 		frogBabies.get(frogBabies.size() - 1).init(core);
 		frogBabies.add(new EnemyTadpole((int)player.cx + 200 + rand.nextInt(150),
 				  					  (int)player.cy - 200 - rand.nextInt(150),
 				  					  entities,
-				  					  30));
+				  					  5));
 		frogBabies.get(frogBabies.size() - 1).init(core);
 		frogBabies.add(new EnemyTadpole((int)player.cx - 200 - rand.nextInt(150),
 				  					  (int)player.cy - 200 - rand.nextInt(150),
 				  					  entities,
-				  					  30));
+				  					  5));
 		frogBabies.get(frogBabies.size() - 1).init(core);
 		entities.addAll(frogBabies);
 		entities.addAll(edibles);
