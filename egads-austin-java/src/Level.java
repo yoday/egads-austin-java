@@ -54,9 +54,11 @@ public class Level {
 	private ArrayList<Entity> entities = new ArrayList<Entity>();
 	
 	public boolean isInPond(int x,int y){
-		float dx2 = x - centerX; dx2 *= dx2;
-		float dy2 = y - centerY; dy2 *= dy2;
+		float dx2 = x - centerX;  dx2 *= dx2;
+		float dy2 = y - centerY;  dy2 *= dy2;
 		float val = (dx2/(semimajorA*semimajorA))+(dy2/(semimajorB*semimajorB));
+		
+	
 		return val<=1;
 	}
 	public void getRectification(int x,int y,int[] dxdy){
@@ -323,11 +325,12 @@ public class Level {
 			int ui = (int)Math.floor(dryness+1);
 			float al = ui-dryness;
 			float au = dryness-li;
-			centerX = (int)(al*centx[li] + au*centx[ui]);
-			centerY = (int)(al*centy[li] + au*centy[ui]);
+			centerX = (int)(al*centx[li] + au*centx[ui]) * numDivs;
+			centerY = (int)(al*centy[li] + au*centy[ui]) * numDivs;
 			semimajorA = (int)(al*semia[li] + au*semib[ui]);
 			semimajorB = (int)(al*semib[li] + au*semib[ui]);
 		}
 	}
 	int centerX,centerY,semimajorA,semimajorB;
+	
 }
