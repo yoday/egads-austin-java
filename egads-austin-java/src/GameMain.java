@@ -86,8 +86,9 @@ public class GameMain extends JApplet {
 		frame.setResizable(false);
 		frame.setVisible(true);
 		//set up the update timer and initialize the GameCore
-		setupTimer();
 		core.onInit();
+		setupTimer();
+		
 	}
 	
 	/**

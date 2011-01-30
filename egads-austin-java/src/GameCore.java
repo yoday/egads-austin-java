@@ -23,40 +23,33 @@ import javax.swing.JApplet;
  * @author Yoan Chinique
  */
 public class GameCore implements MouseListener, MouseMotionListener, KeyListener {
-	ScoreBoard sb = new ScoreBoard();
-	Player p = new Player(sb);
 	
 	private static final long serialVersionUID = 543954373910725885L;
 	
 	private HashMap<String, BufferedImage> imageCache;
 	private HashMap<String, AudioClip> audioCache;
-	
+	Player p;
 	public GameCore() {
 		imageCache = new HashMap<String, BufferedImage>();
 		audioCache = new HashMap<String, AudioClip>();
 		level = new Level();
 	}
-	
+	public void setPlayer(Player curPlayer){
+		p = curPlayer;
+	}
 	Level level;
 	public Level getLevel(){
 		return level;
 	}
 	public void onInit() {
-		Entity.setPlayer(p);
-		p.init(this);
-		sb.init(this);
 		level.init(this);
 	}
 	public void onRender(Graphics2D g) {
 		level.render(g);
-		p.draw(g);
-		sb.draw(g);
 	}
 	public void onUpdate(TimerTask time) {
 		//p.update();
 		level.update(1000f / (float)GameMain.FRAMES_PER_SEC);
-		p.update();
-		sb.update();
 	}
 	public void onExit() {
 		
