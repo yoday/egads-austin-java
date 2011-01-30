@@ -213,6 +213,7 @@ public class EnemyTadpole extends Enemy {
 	public void eat(Entity e)
 	{
 		growth += e.getPointsValue();
+		target = getClosest(difficulty);
 	}
 	
 	@Override
@@ -298,8 +299,9 @@ public class EnemyTadpole extends Enemy {
 	
 	//Returns the x^2+ y^2 distance of the enemy
 	public int getDistance(Entity e) {
-		int tempx = (this.cx - e.cx); tempx *= tempx;
-		int tempy = (this.cy - e.cy); tempy *= tempy;
+		System.out.println(this.cx + " " + e.getCX() + " " + this.cy + " " + e.getCY());
+		int tempx = (this.cx - e.getCX()); tempx *= tempx;
+		int tempy = (this.cy - e.getCY()); tempy *= tempy;
 		return tempx + tempy;
 	}
 	
