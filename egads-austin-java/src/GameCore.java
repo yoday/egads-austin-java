@@ -27,6 +27,7 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 	private static final int MAINGAME = 1;
 	private static final int GAMEOVER = 2;
 	private static final int RUNFROGGYRUN = 3;
+	private static final int CREDITS = 4;
 	private int gameMode = MENU;
 	BufferedImage menuscreen,gameoverscreen;
 	private static final long serialVersionUID = 543954373910725885L;

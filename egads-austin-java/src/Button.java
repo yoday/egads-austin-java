@@ -19,7 +19,7 @@ public class Button {
 	private boolean clicked;
 	private State state;
 	public String text;
-	
+	PressListener prls;
 	public Button() {
 		this("<BUTTON>");
 	}
@@ -27,11 +27,17 @@ public class Button {
 		text = str;
 		state = State.NORMAL;
 	}
+	public Button(BufferedImage normal,BufferedImage over,BufferedImage down,PressListener pl){
+		mouseOverImage = over;
+		mouseDownImage = down;
+		mouseNormalImage = normal;
+		prls = pl;
+	}
 	
 	public void init(GameCore core) {
-		mouseOverImage = core.getImage("art/button_over.png");
-		mouseDownImage = core.getImage("art/button_down.png");
-		mouseNormalImage = core.getImage("art/button_normal.png");
+		//mouseOverImage = core.getImage("art/button_over.png");
+		//mouseDownImage = core.getImage("art/button_down.png");
+		//mouseNormalImage = core.getImage("art/button_normal.png");
 		clicked = false;
 		bounds = new Rectangle();
 		bounds.width = mouseDownImage.getWidth();
@@ -101,8 +107,15 @@ public class Button {
 	public void onMouseUp(int x, int y) {
 		if (bounds.contains(x, y) && state == State.DOWN) {
 			state = State.OVER;
-			clicked = true;
+			//clicked = true;
+			if(prls!=null){
+				prls.buttonPressed();
+			}
 		}
 	}
 
+}
+
+interface PressListener{
+	public void buttonPressed();
 }
