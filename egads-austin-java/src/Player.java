@@ -79,7 +79,7 @@ public class Player extends Entity{
 		
 		bi = Currentimg[seqslot];
 		AffineTransform atmp = g2.getTransform();
-		g2.rotate(theta,(cx-gmc.get().getLevel().getScreenULX()) + myR,(cy-gmc.get().getLevel().getScreenULY()) + myR);
+		g2.rotate(theta,(cx-gmc.get().getLevel().getScreenULX()) + myR/resizeValues[AgeState],(cy-gmc.get().getLevel().getScreenULY()) + myR/resizeValues[AgeState]);
 		g2.drawImage(bi, (int)(cx-gmc.get().getLevel().getScreenULX()), (int)(cy-gmc.get().getLevel().getScreenULY()),
 				(int)(bi.getWidth()/resizeValues[AgeState]), (int)(bi.getHeight()/resizeValues[AgeState]), null); 
 		g2.setTransform(atmp);
