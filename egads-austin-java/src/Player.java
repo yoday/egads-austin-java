@@ -44,7 +44,7 @@ public class Player extends Entity{
 	int AgeState = EGG;
 	int centerX = 0; //center of the level 
 	int centerY = 0; //ceneter of the level
-	float cx = 150; float cy  = 150; int myR = 50;
+	float cx = 400; float cy  = 400; int myR = 50;
 	private BufferedImage bi;
 	private AudioClip ac;
 	WeakReference<GameCore> gmc;

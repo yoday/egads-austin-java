@@ -99,23 +99,27 @@ public class Level {
 			edibles.add(new Food(ed,fx,fy));
 			curLv = (curLv + 1)%4;
 		}
-		entities.addAll(edibles);
-		entities.add(new EnemyTadpole((int)player.cx + 20 + rand.nextInt(100),
-									  (int)player.cy + 20 + rand.nextInt(100),
+		entities.add(new EnemyTadpole((int)player.cx + 200 + rand.nextInt(150),
+									  (int)player.cy + 200 + rand.nextInt(150),
 									  entities,
 									  30));
-		entities.add(new EnemyTadpole((int)player.cx - 20 - rand.nextInt(100),
-				  					  (int)player.cy + 20 + rand.nextInt(100),
+		entities.get(entities.size() - 1).init(core);
+		entities.add(new EnemyTadpole((int)player.cx - 200 - rand.nextInt(150),
+				  					  (int)player.cy + 200 + rand.nextInt(150),
 				  					  entities,
 				  					  30));
-		entities.add(new EnemyTadpole((int)player.cx + 20 + rand.nextInt(100),
-				  					  (int)player.cy - 20 - rand.nextInt(100),
+		entities.get(entities.size() - 1).init(core);
+		entities.add(new EnemyTadpole((int)player.cx + 200 + rand.nextInt(150),
+				  					  (int)player.cy - 200 - rand.nextInt(150),
 				  					  entities,
 				  					  30));
-		entities.add(new EnemyTadpole((int)player.cx - 20 - rand.nextInt(100),
-				  					  (int)player.cy - 20 - rand.nextInt(100),
+		entities.get(entities.size() - 1).init(core);
+		entities.add(new EnemyTadpole((int)player.cx - 200 - rand.nextInt(150),
+				  					  (int)player.cy - 200 - rand.nextInt(150),
 				  					  entities,
 				  					  30));
+		entities.get(entities.size() - 1).init(core);
+		entities.addAll(edibles);
 		sb.init(core);
 		player.init(core);
 		for(Enemy e:edibles){
@@ -146,8 +150,7 @@ public class Level {
 		
 		g.setTransform(savedTransform);
 		
-		
-		for(Enemy e:edibles){
+		for(Entity e:entities){
 			e.draw(g);
 		}
 		player.draw(g);
