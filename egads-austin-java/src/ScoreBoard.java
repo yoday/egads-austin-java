@@ -115,4 +115,14 @@ public class ScoreBoard extends Entity{
 		}
 		
 	}
+	@Override
+	public boolean isEdible(int ageState) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public int getPointsValue() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

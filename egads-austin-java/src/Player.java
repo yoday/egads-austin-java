@@ -44,7 +44,7 @@ public class Player extends Entity{
 	int AgeState = EGG;
 	int centerX = 0; //center of the level 
 	int centerY = 0; //ceneter of the level
-	float x = 150; float y = 150; int r = 50;
+	float cx = 150; float cy  = 150; int myR = 50;
 	private BufferedImage bi;
 	private AudioClip ac;
 	WeakReference<GameCore> gmc;
@@ -60,18 +60,18 @@ public class Player extends Entity{
 	int maxDelay = 10;
 	
 	public int getCX(){
-		return (int) (x+r);
+		return (int) (cx+myR);
 	}
 	public int getCY(){
-		return (int)(y+r);
+		return (int)(cy+myR);
 	}
 	
 	
 	public void draw(Graphics2D g2) {
 		bi = Currentimg[seqslot];
 		AffineTransform atmp = g2.getTransform();
-		g2.rotate(theta,(x-gmc.get().getLevel().getScreenULX()) + r,(y-gmc.get().getLevel().getScreenULY()) + r);
-		g2.drawImage(bi, (int)(x-gmc.get().getLevel().getScreenULX()), (int)(y-gmc.get().getLevel().getScreenULY()), null);
+		g2.rotate(theta,(cx-gmc.get().getLevel().getScreenULX()) + myR,(cy-gmc.get().getLevel().getScreenULY()) + myR);
+		g2.drawImage(bi, (int)(cx-gmc.get().getLevel().getScreenULX()), (int)(cy-gmc.get().getLevel().getScreenULY()), null);
 		g2.setTransform(atmp);
 		if(imageDelay >= maxDelay){
 			imageDelay = 0;
@@ -101,7 +101,7 @@ public class Player extends Entity{
 				bi = Currentimg[0];
 				int w = bi.getWidth();
 				int h = bi.getHeight();
-				r = (w>h) ? h/2 : w/2;
+				myR = (w>h) ? h/2 : w/2;
 			}
 		break;
 		case TADPOLE:
@@ -115,7 +115,7 @@ public class Player extends Entity{
 				bi = Currentimg[0];
 				int w = bi.getWidth();
 				int h = bi.getHeight();
-				r = (w>h) ? h/2 : w/2;
+				myR = (w>h) ? h/2 : w/2;
 			}
 		break;
 		case HINDLEGS:
@@ -129,7 +129,7 @@ public class Player extends Entity{
 				bi = Currentimg[0];
 				int w = bi.getWidth();
 				int h = bi.getHeight();
-				r = (w>h) ? h/2 : w/2;
+				myR = (w>h) ? h/2 : w/2;
 			}
 		break;
 		case NEARFROG:
@@ -143,7 +143,7 @@ public class Player extends Entity{
 				bi = Currentimg[0];
 				int w = bi.getWidth();
 				int h = bi.getHeight();
-				r = (w>h) ? h/2 : w/2;
+				myR = (w>h) ? h/2 : w/2;
 			}
 		break;
 		case FROG:
@@ -157,7 +157,7 @@ public class Player extends Entity{
 				bi = Currentimg[0];
 				int w = bi.getWidth();
 				int h = bi.getHeight();
-				r = (w>h) ? h/2 : w/2;
+				myR = (w>h) ? h/2 : w/2;
 			}
 		break;
 		}
@@ -178,8 +178,8 @@ public class Player extends Entity{
 			theta += Math.PI/64;
 		}
 		//Now for the movement.
-		x += direction*speed*Math.cos(theta + 3* Math.PI/2);
-		y += direction*speed*Math.sin(theta + 3* Math.PI/2);
+		cx += direction*speed*Math.cos(theta + 3* Math.PI/2);
+		cy  += direction*speed*Math.sin(theta + 3* Math.PI/2);
 		
 	}
 
@@ -210,7 +210,7 @@ public class Player extends Entity{
 		bi = Currentimg[0];
 		int w = bi.getWidth();
 		int h = bi.getHeight();
-		r = (w>h) ? h/2 : w/2;
+		myR = (w>h) ? h/2 : w/2;
 		gmc = new WeakReference<GameCore>(gc);
 	}
 	public void upthrust(boolean isDown){
@@ -231,7 +231,7 @@ public class Player extends Entity{
 			score.addPts(1);
 	}
 	boolean isColliding(Enemy e){
-		if(e.isColliding((int)x, (int)y, r)){
+		if(e.isColliding((int)cx, (int)cy, myR)){
 			if(e.isEdible(AgeState)){ // We need to kill the enemy and increase the score and growth of the the player
 			//growth += e.getPointsValue();
 			score.addPts(e.getPointsValue());
@@ -259,11 +259,21 @@ public class Player extends Entity{
 		score = sc;
 	}
 	public boolean eatFood(int Foodx,int Foody,int Foodr){
-		int dx2 = (int) (Foodx-x); dx2 *= dx2;
-		int dy2 = (int) (Foody-y); dy2 *= dy2;
-		int sr2 = (Foodr + r); sr2 *= sr2;
+		int dx2 = (int) (Foodx-cx); dx2 *= dx2;
+		int dy2 = (int) (Foody-cy); dy2 *= dy2;
+		int sr2 = (Foodr + myR); sr2 *= sr2;
 		int sd = dx2+dy2;
 		return sr2 <= sd;
+	}
+	
+	@Override
+	public boolean isEdible(int tadpoleState) {
+		return tadpoleState > AgeState;
+	}
+	
+	@Override
+	public int getPointsValue() {
+		return (AgeState+2)*2;
 	}
 	
 }
