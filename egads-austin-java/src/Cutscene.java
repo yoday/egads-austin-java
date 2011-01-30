@@ -36,7 +36,7 @@ public class Cutscene {
 	}
 	
 	public void init(GameCore core) {
-		background = core.getImage("art/cut-scenes/cut_pond-trans.png");
+		background = core.getImage("art/screens/cut_pond-trans.png");
 		frogAnims = new BufferedImage[] {
 				core.getImage("art/animations/frog/5frog_1.png"),
 				//core.getImage("art/animations/frog/5frog_2.png"),
