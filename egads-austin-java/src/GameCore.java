@@ -38,6 +38,7 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 	private HashMap<String, AudioClip> audioCache;
 	Player p;
 	Button credits,newgame,exit,controls;
+	AudioClip croak;
 	Cutscene frogrun;
 	public GameCore() {
 		imageCache = new HashMap<String, BufferedImage>();
@@ -65,6 +66,7 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 	public void onInit() {
 		frogrun.init(this);
 		music = this.getAudio("/soundage/froghopharmony.wav");
+		croak = this.getAudio("soundage/frogCroak.wav");
 		music.loop();
 		menuscreen = this.getImage("art/screens/title.png");
 		gameoverscreen = this.getImage("art/screens/game-over.png");
@@ -73,6 +75,7 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 		instructscreen = this.getImage("art/screens/controls.png");
 		newgame = new Button(this.getImage("art/menu/newgame.png"),this.getImage("art/menu/newgame-selected.png"),this.getImage("art/menu/newgame-selected.png"),new PressListener(){
 			public void buttonPressed(){
+				croak.play();
 				if(!first){
 					level.resetGame(gcref);
 				}
@@ -86,6 +89,7 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 		newgame.centerOn(675,30);
 		controls = new Button(this.getImage("art/menu/controls.png"),this.getImage("art/menu/controls-selected.png"),this.getImage("art/menu/controls-selected.png"),new PressListener(){
 			public void buttonPressed(){
+				croak.play();
 				gameMode = CONTROLS;
 			}
 		});
@@ -93,6 +97,7 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 		controls.centerOn(700,90);
 		credits = new Button(this.getImage("art/menu/credits.png"),this.getImage("art/menu/credits-selected.png"),this.getImage("art/menu/credits-selected.png"),new PressListener(){
 			public void buttonPressed(){
+				croak.play();
 				gameMode = CREDITS;
 			}
 		});
@@ -100,6 +105,7 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 		credits.centerOn(690,159);
 		exit = new Button(this.getImage("art/menu/exit.png"),this.getImage("art/menu/exit-selected.png"),this.getImage("art/menu/exit-selected.png"),new PressListener(){
 			public void buttonPressed(){
+				croak.play();
 				System.exit(0);
 			}
 		});
