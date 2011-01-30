@@ -32,6 +32,7 @@ public class Button {
 		mouseDownImage = down;
 		mouseNormalImage = normal;
 		prls = pl;
+		state = State.NORMAL;
 	}
 	
 	public void init(GameCore core) {
@@ -83,15 +84,15 @@ public class Button {
 			throw new RuntimeException();
 		}
 		
-		if (clicked) {
-			g.setColor(Color.BLACK);
-			g.fillRect(bounds.x, bounds.y, bounds.width, bounds.height);
-			g.setColor(Color.WHITE);
-			g.drawString("Button has been pressed.", bounds.x + bounds.width/16, bounds.y + bounds.height/2);
-		}
+		//if (clicked) {
+		//	g.setColor(Color.BLACK);
+		//	g.fillRect(bounds.x, bounds.y, bounds.width, bounds.height);
+		//	g.setColor(Color.WHITE);
+		//	g.drawString("Button has been pressed.", bounds.x + bounds.width/16, bounds.y + bounds.height/2);
+		//}
 		
-		Rectangle2D rect = g.getFontMetrics().getStringBounds(text, g);
-		g.drawString(text, bounds.x + (int)rect.getCenterX()/2, bounds.y + (int)rect.getCenterY()/2);
+		//Rectangle2D rect = g.getFontMetrics().getStringBounds(text, g);
+		//g.drawString(text, bounds.x + (int)rect.getCenterX()/2, bounds.y + (int)rect.getCenterY()/2);
 	}
 	
 	public void onMouseMove(int x, int y) {
