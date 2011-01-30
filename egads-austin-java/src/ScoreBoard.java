@@ -28,7 +28,7 @@ public class ScoreBoard extends Entity{
 	//the score, split apart into digits
 	private int[] digits = new int[8];
 	//the score in one place
-	private long score = 0;
+	public long score = 0;
 	//used for a rolling counter, how many points must counter count
 	private int over = 0;
 	private static final int ROLLSPD = 3;
