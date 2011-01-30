@@ -1,5 +1,6 @@
 import java.applet.AudioClip;
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.lang.ref.WeakReference;
 import java.util.*;
@@ -35,6 +36,10 @@ public class EnemyTadpole extends Enemy {
 	int r = 50;
 	int difficulty;
 	int eggTimer = 0;
+	int seqslot = 0; // Where I am in the image loop
+	int nimgs = 4; // Number of images for the current GIF; There are 4 images for the Egg so we start with that.
+	int imageDelay = 0;
+	int maxDelay = 10;
 
 	//constructor
 	public EnemyTadpole(int xPos,int yPos, List<Entity> food, int diff){
@@ -56,10 +61,20 @@ public class EnemyTadpole extends Enemy {
 
 	@Override
 	public void draw(Graphics2D g2) {
+		bi = Currentimg[seqslot];
+		AffineTransform atmp = g2.getTransform();
 		g2.rotate(theta,cx + r,cy + r);
+		g2.drawImage(bi,cx,cy,null);
+		g2.setTransform(atmp);
 		//DRAW THE IMAGE
 		//g2.drawImage(bi, (int)x, (int)y, null);
 		g2.rotate(-theta,-(cx + r),-(cy + r));
+		if(imageDelay >= maxDelay){
+			imageDelay = 0;
+		if(seqslot < Currentimg.length -1) seqslot ++; else seqslot = 0;
+		}
+		else
+			imageDelay++;
 	}
 
 	@Override
@@ -67,11 +82,14 @@ public class EnemyTadpole extends Enemy {
 		switch(AgeState){
 		case EGG: 
 			if(growth >= 20){
+				Currentimg = imgHatched;
+				bi = Currentimg[0];
+				int w = bi.getWidth();
+				int h = bi.getHeight();
+				myR = (w>h) ? h/2 : w/2;
 				AgeState = TADPOLE; 
 				growth = 0;
 				speed = 4;
-				//imgName = imgHatched;
-				//bi = gmc.get().getImage(imgName);
 				target = getClosest(difficulty);
 			}
 			eggTimer++;
@@ -82,6 +100,11 @@ public class EnemyTadpole extends Enemy {
 		break;
 		case TADPOLE:
 			if(growth >= 40){
+				Currentimg = imgHindlegs;
+				bi = Currentimg[0];
+				int w = bi.getWidth();
+				int h = bi.getHeight();
+				myR = (w>h) ? h/2 : w/2;
 				AgeState = HINDLEGS; 
 				growth = 0;
 				speed = 3;
@@ -91,6 +114,11 @@ public class EnemyTadpole extends Enemy {
 		break;
 		case HINDLEGS:
 			if(growth >= 80){
+				Currentimg = imgAlmostFrog;
+				bi = Currentimg[0];
+				int w = bi.getWidth();
+				int h = bi.getHeight();
+				myR = (w>h) ? h/2 : w/2;
 				AgeState = NEARFROG; 
 				growth = 0;
 				speed = 3;
@@ -100,6 +128,11 @@ public class EnemyTadpole extends Enemy {
 		break;
 		case NEARFROG:
 			if(growth >= 160){
+				Currentimg = imgFrog;
+				bi = Currentimg[0];
+				int w = bi.getWidth();
+				int h = bi.getHeight();
+				myR = (w>h) ? h/2 : w/2;
 				AgeState = FROG; 
 				growth = 0;
 				speed = 4;
@@ -109,6 +142,11 @@ public class EnemyTadpole extends Enemy {
 		break;
 		case FROG:
 			if(growth >= 320){
+				Currentimg = imgEgg;
+				bi = Currentimg[0];
+				int w = bi.getWidth();
+				int h = bi.getHeight();
+				myR = (w>h) ? h/2 : w/2;
 				AgeState = EGG; 
 				growth = 0;
 				speed = 0;
