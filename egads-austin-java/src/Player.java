@@ -36,6 +36,8 @@ public class Player extends Entity{
 	public static final int FROG = 4;
 	
 	int AgeState = EGG;
+	int centerX = 0; //center of the level 
+	int centerY = 0; //ceneter of the level
 	float x = 150; float y = 150; int r = 50;
 	private BufferedImage bi;
 	private AudioClip ac;
@@ -248,6 +250,14 @@ public class Player extends Entity{
 	private ScoreBoard score;
 	public Player(ScoreBoard sc){
 		score = sc;
+	}
+	
+	public boolean isInBounds(int levelWidth, int levelHeight){
+		int b2 = (levelHeight/2) + r; b2*= b2;
+		int a2 = (levelWidth/2) + r; a2*= a2;
+		int dx2 = (int) (x - centerX); dx2 *= dx2;
+		int dy2 = (int) (y - centerY); dy2 *= dy2;
+	return (b2*dx2 + a2*dy2 <= a2*b2);
 	}
 	
 }
