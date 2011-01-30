@@ -2,7 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-
+import java.util.*;
 
 public class Level {
 	private static final int numDivs = 3;
@@ -18,6 +18,7 @@ public class Level {
 	int viewX;
 	int viewY;
 	Player player;
+	ScoreBoard sb;
 	int puddleLevel;
 	Circle[] puddleBounds;
 	BufferedImage[] puddleImages;
@@ -32,6 +33,7 @@ public class Level {
 			"art/improvedwater/water8.png",
 			"art/improvedwater/water9.png",
 	};
+	private ArrayList<Enemy> edibles = new ArrayList<Enemy>();
 	
 	public Level() {
 		puddleBounds = new Circle[puddleImageNames.length];
@@ -58,7 +60,12 @@ public class Level {
 			puddleImages[i] = core.getImage(puddleImageNames[i]);
 			puddleBounds[i] = new Circle(centerX, centerY, lastRad -= SCALE);
 		}
-		
+		sb = new ScoreBoard();
+		player = new Player(sb);
+		sb.init(core);
+		player.init(core);
+		core.setPlayer(player);
+		Entity.setPlayer(player);
 	}
 	Circle cursor = new Circle(GameMain.GAME_WIDTH/2, GameMain.GAME_WIDTH/2, 32);
 	
@@ -73,12 +80,21 @@ public class Level {
 		cursor.render(g);
 		
 		g.setTransform(savedTransform);
+		
+		player.draw(g);
+		
+		sb.draw(g);
 	}
 	
 	public void update(float dt) {
-		int tx = 0;
-		int ty = 0;
-		//int px = player.getCX();
+		player.update();
+		
+		sb.update();
+		int px = player.getCX();
+		int py = player.getCY();
+		//keep the view away from the corners
+		viewX = (px<=leftBnd) ? leftBnd-GameMain.GAME_WIDTH/2 : ( (px>=rightBnd) ? rightBnd-GameMain.GAME_WIDTH/2 : (px-GameMain.GAME_WIDTH/2) ) ;
+		viewY = (py<=upBnd)   ? upBnd-GameMain.GAME_HEIGHT/2   : ( (py>=lowBnd  ) ? lowBnd-GameMain.GAME_HEIGHT/2   : (py-GameMain.GAME_HEIGHT/2) ) ;
 	}
 	
 }
