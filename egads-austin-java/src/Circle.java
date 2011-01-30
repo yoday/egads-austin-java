@@ -21,6 +21,7 @@ public final class Circle {
 		return distance(c) <= this.r + c.r;
 	}
 	public final float distance(Circle c) {
+		assert c != null;
 		final float dx = this.x - c.x;
 		final float dy = this.y - c.y;
 		return (float)Math.sqrt(dx*dx + dy*dy);
