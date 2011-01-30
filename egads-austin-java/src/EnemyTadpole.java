@@ -68,7 +68,7 @@ public class EnemyTadpole extends Enemy {
 		}
 		bi = Currentimg[seqslot];
 		AffineTransform atmp = g2.getTransform();
-		g2.rotate(theta,(cx-gmc.get().getLevel().getScreenULX()) + r,(cy- gmc.get().getLevel().getScreenULY()) + r);
+		g2.rotate(theta,(cx-gmc.get().getLevel().getScreenULX()) + r/resizeValues[AgeState],(cy- gmc.get().getLevel().getScreenULY()) + r/resizeValues[AgeState]);
 		g2.drawImage(bi, (int)(cx-gmc.get().getLevel().getScreenULX()), (int)(cy-gmc.get().getLevel().getScreenULY()),
 				(int)(bi.getWidth()/resizeValues[AgeState]), (int)(bi.getHeight()/resizeValues[AgeState]), null); 
 		//g2.drawImage(bi, (cx-gmc.get().getLevel().getScreenULX()), (cy-gmc.get().getLevel().getScreenULY()),null);
