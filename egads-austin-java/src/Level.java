@@ -71,10 +71,15 @@ public class Level {
 		viewX = newULX;
 		viewY = newULY;
 	}
-	public void resetGame(){
+	public void resetGame(GameCore core){
 		
+		init(core);
 	}
 	public void init(GameCore core) {
+		dryness = 0;
+		entities.removeAll(entities);
+		edibles.removeAll(edibles);
+		frogBabies.retainAll(frogBabies);
 		this.core = core;
 		float centerX = GameMain.GAME_WIDTH/2;
 		float centerY = GameMain.GAME_HEIGHT/2;

@@ -52,12 +52,19 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 	public Level getLevel(){
 		return level;
 	}
+	GameCore gcref = this;
+	boolean first = true;
 	public void onInit() {
 		menuscreen = this.getImage("art/screens/title.png");
 		gameoverscreen = this.getImage("art/screens/game-over.png");
 		newgame = new Button(this.getImage("art/menu/newgame.png"),this.getImage("art/menu/newgame-selected.png"),this.getImage("art/menu/newgame-selected.png"),new PressListener(){
 			public void buttonPressed(){
-				level.resetGame();
+				if(!first){
+					level.resetGame(gcref);
+				}
+				else{
+					first = false;
+				}
 				gameMode = MAINGAME;
 			}
 		});
