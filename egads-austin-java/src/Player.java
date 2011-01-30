@@ -67,7 +67,10 @@ public class Player extends Entity{
 	}
 	
 	
-	public void draw(Graphics2D g2) {
+	public synchronized void draw(Graphics2D g2) {
+		if(seqslot>=Currentimg.length){
+			seqslot=0;
+		}
 		bi = Currentimg[seqslot];
 		AffineTransform atmp = g2.getTransform();
 		g2.rotate(theta,(cx-gmc.get().getLevel().getScreenULX()) + myR,(cy-gmc.get().getLevel().getScreenULY()) + myR);
@@ -75,7 +78,7 @@ public class Player extends Entity{
 		g2.setTransform(atmp);
 		if(imageDelay >= maxDelay){
 			imageDelay = 0;
-		if(seqslot < Currentimg.length -1) seqslot ++; else seqslot = 0;
+			seqslot++;
 		}
 		else
 			imageDelay++;
@@ -88,7 +91,7 @@ public class Player extends Entity{
 
 	
 	//Key Cases that should do nothing: UP && DOWN || LEFT && RIGHT
-	public void update() {
+	public synchronized void update() {
 		switch(AgeState){
 		case EGG: 
 			if(needEvolve){

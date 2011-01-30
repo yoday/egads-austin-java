@@ -27,7 +27,7 @@ public class Food extends Enemy{
 	String sndnm;
 	int edible;
 	WeakReference<GameCore> gmc;
-	
+	int wo2,ho2;
 	public Food(int edibility,int x,int y){
 		cx = x;
 		cy = y;
@@ -68,7 +68,7 @@ public class Food extends Enemy{
 		y = 0;
 		x = gmc.get().getLevel().getScreenULX();
 		y = gmc.get().getLevel().getScreenULY();
-		g2.drawImage(bi,cx-x,cy-y,null);
+		g2.drawImage(bi,cx-x-wo2,cy-y-ho2,null);
 	}
 	//this food sits still and dissappears when eaten
 	public void update(){}
@@ -83,6 +83,10 @@ public class Food extends Enemy{
 		int h = bi.getHeight();
 		myR = (w>h) ? h/2 : w/2;
 		gmc = new WeakReference<GameCore>(gc);
+		wo2 = w/2;
+		ho2 = h/2;
+		cx += wo2;
+		cy += ho2;
 	}
 	public boolean isEdible(int tadState){
 		return tadState>=edible;

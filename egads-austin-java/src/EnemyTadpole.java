@@ -60,7 +60,10 @@ public class EnemyTadpole extends Enemy {
 	}
 
 	@Override
-	public void draw(Graphics2D g2) {
+	public synchronized void draw(Graphics2D g2) {
+		if(seqslot>=Currentimg.length){
+			seqslot = 0;
+		}
 		bi = Currentimg[seqslot];
 		AffineTransform atmp = g2.getTransform();
 		g2.rotate(theta,(cx-gmc.get().getLevel().getScreenULX()) + r,(cy- gmc.get().getLevel().getScreenULY()) + r);
@@ -68,14 +71,14 @@ public class EnemyTadpole extends Enemy {
 		g2.setTransform(atmp);
 		if(imageDelay >= maxDelay){
 			imageDelay = 0;
-		if(seqslot < Currentimg.length -1) seqslot ++; else seqslot = 0;
+			seqslot++;
 		}
 		else
 			imageDelay++;
 	}
 
 	@Override
-	public void update() {
+	public synchronized void update() {
 		if(theta >= Math.PI*2)
 			theta -= Math.PI*2;
 		if(theta < 0)
