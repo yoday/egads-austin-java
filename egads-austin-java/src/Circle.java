@@ -18,7 +18,13 @@ public final class Circle {
 	
 	public final boolean isColliding(Circle c) {
 		assert c != null;
-		return distance(c) <= this.r + c.r;
+		return distance2(c) <= (this.r + c.r)*(this.r+c.r);
+	}
+	public final float distance2(Circle c){
+		assert c != null;
+		final float dx = this.x - c.x;
+		final float dy = this.y - c.y;
+		return (float)(dx*dx + dy*dy);
 	}
 	public final float distance(Circle c) {
 		assert c != null;
@@ -29,7 +35,7 @@ public final class Circle {
 	
 	public final boolean isInside(Circle c) {
 		assert c != null;
-		return distance(c) <= c.r - this.r;
+		return distance2(c) <= (c.r - this.r)*(c.r-this.r);
 	}
 	
 	public final void render(Graphics2D g) {
