@@ -61,7 +61,7 @@ public class EnemyTadpole extends Enemy {
 
 	@Override
 	public void draw(Graphics2D g2) {
-		bi = imgEgg[seqslot];
+		bi = Currentimg[seqslot];
 		AffineTransform atmp = g2.getTransform();
 		g2.rotate(theta,(cx-gmc.get().getLevel().getScreenULX()) + r,(cy- gmc.get().getLevel().getScreenULY()) + r);
 		g2.drawImage(bi, (cx-gmc.get().getLevel().getScreenULX()), (cy-gmc.get().getLevel().getScreenULY()),null);
@@ -79,6 +79,7 @@ public class EnemyTadpole extends Enemy {
 		switch(AgeState){
 		case EGG: 
 			if(growth >= 20){
+				seqslot =0;
 				Currentimg = imgHatched;
 				bi = Currentimg[0];
 				int w = bi.getWidth();
@@ -98,6 +99,7 @@ public class EnemyTadpole extends Enemy {
 		case TADPOLE:
 			if(growth >= 40){
 				Currentimg = imgHindlegs;
+				seqslot =0;
 				bi = Currentimg[0];
 				int w = bi.getWidth();
 				int h = bi.getHeight();
@@ -112,6 +114,7 @@ public class EnemyTadpole extends Enemy {
 		case HINDLEGS:
 			if(growth >= 80){
 				Currentimg = imgAlmostFrog;
+				seqslot =0;
 				bi = Currentimg[0];
 				int w = bi.getWidth();
 				int h = bi.getHeight();
@@ -126,6 +129,7 @@ public class EnemyTadpole extends Enemy {
 		case NEARFROG:
 			if(growth >= 160){
 				Currentimg = imgFrog;
+				seqslot =0;
 				bi = Currentimg[0];
 				int w = bi.getWidth();
 				int h = bi.getHeight();
@@ -140,6 +144,7 @@ public class EnemyTadpole extends Enemy {
 		case FROG:
 			if(growth >= 320){
 				Currentimg = imgEgg;
+				seqslot =0;
 				bi = Currentimg[0];
 				int w = bi.getWidth();
 				int h = bi.getHeight();
@@ -158,15 +163,15 @@ public class EnemyTadpole extends Enemy {
 		destinationTheta = Math.abs(Math.atan((1.0*(target.cy - cy))/(1.0*(target.cx - cx))));
 		if(destinationTheta > theta) {
 			if(destinationTheta - theta <= Math.PI && destinationTheta - theta >= 0)
-				theta += Math.PI/16;
+				theta += Math.PI/64;
 			else
-				theta -= Math.PI/16;
+				theta -= Math.PI/64;
 		}
 		else {
 			if(theta - destinationTheta <= Math.PI && theta - destinationTheta >= 0)
-				theta -= Math.PI/16;
+				theta -= Math.PI/64;
 			else
-				theta += Math.PI/16;
+				theta += Math.PI/64;
 		}
 		
 		cx += speed*Math.cos(theta);
