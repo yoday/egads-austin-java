@@ -23,6 +23,11 @@ import javax.swing.JApplet;
  * @author Yoan Chinique
  */
 public class GameCore implements MouseListener, MouseMotionListener, KeyListener {
+	private static final int MENU = 0;
+	private static final int MAINGAME = 1;
+	private static final int GAMEOVER = 2;
+	private static final int RUNFROGGYRUN = 3;
+	private int gameMode = MENU;
 	
 	private static final long serialVersionUID = 543954373910725885L;
 	
@@ -48,8 +53,16 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 		level.render(g);
 	}
 	public void onUpdate(TimerTask time) {
-		//p.update();
-		level.update(1000f / (float)GameMain.FRAMES_PER_SEC);
+		if(gameMode == MENU){
+			
+		}
+		else{
+			if(gameMode == MAINGAME){
+				//p.update();
+				level.update(1000f / (float)GameMain.FRAMES_PER_SEC);
+			}
+		}
+		
 	}
 	public void onExit() {
 		
