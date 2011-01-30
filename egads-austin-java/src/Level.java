@@ -4,6 +4,8 @@ import java.awt.image.BufferedImage;
 import java.util.*;
 
 public class Level {
+	private static final float probabilityOfSpawn = 0.1f;
+	int curSpTp = 0;
 	private static final int numDivs = 3;
 	private static final int initSpawn = 100;
 	private static final float dndf = 0.001f;
@@ -292,6 +294,13 @@ public class Level {
 	}
 	
 	public synchronized void update(float dt) {
+		if(rand.nextFloat()<probabilityOfSpawn){
+			Food f = new Food(curSpTp==0?Food.TADPOLE:(curSpTp==1 ? Food.HINDLEGS : Food.NEARFROG) , rand.nextInt(worldWidth),rand.nextInt(worldHeight));
+			f.init(core);
+			curSpTp = (curSpTp + 1)%3;
+			entities.add(f);
+			edibles.add(f);
+		}
 		//player.update();
 		sb.update();
 		for(Entity e:entities){
