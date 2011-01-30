@@ -37,11 +37,14 @@ public class GameMain extends JApplet {
 	public GameMain() {
 	}
 	
+	/**
+	 * Method for double buffering.
+	 */
 	public void bufferAndRender(Graphics2D g) {
 		g.drawImage(screenBuffer, 0, 0, null);
 		screenGraphics = screenBuffer.createGraphics();
 		screenGraphics.setColor(Color.WHITE);
-		screenGraphics.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+		//screenGraphics.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
 		core.onRender(screenGraphics);
 		screenGraphics.dispose();
 	}
@@ -78,6 +81,9 @@ public class GameMain extends JApplet {
 		p.y -= GAME_HEIGHT/2;
 		frame.setLocation(p);
 		this.setPreferredSize(GAME_SIZE);
+		frame.setPreferredSize(GAME_SIZE);
+		this.setSize(GAME_SIZE);
+		frame.setSize(GAME_SIZE);
 		//more steps to make the frame ready for the game
 		frame.add(this);
 		this.requestFocusInWindow();
