@@ -234,8 +234,8 @@ public class EnemyTadpole extends Enemy {
 				if(count == amount) // This is going to be sorting a lot, even if you don't add stuff.
 					sortClosestList();
 				int temp = getDistance(e);
-				if(temp < getDistance(closestList.get(amount))) {
-					int j = amount;
+				if(temp < getDistance(closestList.get(amount-1))) {
+					int j = amount -1;
 			
 					for(; j > 0 && temp < getDistance(closestList.get(j-1)); j--)
 						closestList.set(j , closestList.get(j-1));
