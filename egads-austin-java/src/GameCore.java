@@ -48,6 +48,7 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 	}
 	public void alertToCutscene(){
 		gameMode = RUNFROGGYRUN;
+		level.nextStage(this);
 	}
 	public void setPlayer(Player curPlayer){
 		p = curPlayer;
