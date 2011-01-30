@@ -134,8 +134,9 @@ public class GameMain extends JApplet {
 		this.requestFocus();
 		this.requestFocusInWindow();
 		//set up the update timer and initialize the GameCore
-		setupTimer();
 		core.onInit();
+		setupTimer();
+		
 	}
 	
 	/**
