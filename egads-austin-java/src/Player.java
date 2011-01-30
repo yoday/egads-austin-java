@@ -173,6 +173,7 @@ public class Player extends Entity{
 			}
 		break;
 		}
+		if(AgeState != EGG){
 		if(up && !down){ // We have up thrust
 			direction = 1;
 		}
@@ -192,6 +193,7 @@ public class Player extends Entity{
 		//Now for the movement.
 		cx += direction*speed*Math.cos(theta + 3* Math.PI/2);
 		cy  += direction*speed*Math.sin(theta + 3* Math.PI/2);
+		}
 		
 	}
 
@@ -239,7 +241,7 @@ public class Player extends Entity{
 	}
 	//Need to be in egg to be able to break egg.
 	public void BreakEgg(boolean isDown){
-//		if(isDown && AgeState == EGG)
+		if(isDown && AgeState == EGG)
 			score.addPts(1);
 	}
 	boolean isColliding(Enemy e){
