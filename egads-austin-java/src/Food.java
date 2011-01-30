@@ -22,6 +22,7 @@ public class Food extends Enemy{
 	private BufferedImage bi;
 	private AudioClip ac;
 	private int score;
+	private static int[] rect = new int[2];
 	int index;
 	String imgnm;
 	String sndnm;
@@ -71,7 +72,10 @@ public class Food extends Enemy{
 		g2.drawImage(bi,cx-x-wo2,cy-y-ho2,null);
 	}
 	//this food sits still and dissappears when eaten
-	public void update(){}
+	boolean first = true;
+	public void update(){
+		
+	}
 	public void kill(int condition){
 		ac.play();
 		tokill = true;
