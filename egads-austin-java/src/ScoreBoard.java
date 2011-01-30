@@ -41,7 +41,7 @@ public class ScoreBoard extends Entity{
 		}
 		Color tmp = g2.getColor();
 		g2.setColor(BARCOL);
-		g2.fillRect(BARLOCX,BARLOCY,barw,BARHEIGHT);
+		g2.fillRect(BARLOCX,BARLOCY-12,barw,BARHEIGHT);
 		g2.setColor(tmp);
 		
 		barw = BARWIDTH /4;
