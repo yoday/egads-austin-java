@@ -71,7 +71,9 @@ public class Level {
 		viewX = newULX;
 		viewY = newULY;
 	}
-	
+	public void resetGame(){
+		
+	}
 	public void init(GameCore core) {
 		this.core = core;
 		float centerX = GameMain.GAME_WIDTH/2;
@@ -157,7 +159,7 @@ public class Level {
 		for(Entity e:entities){
 			e.draw(g);
 		}
-		player.draw(g);
+		//player.draw(g);
 		sb.draw(g);
 	}
 	
