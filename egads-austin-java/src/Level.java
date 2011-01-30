@@ -57,9 +57,7 @@ public class Level {
 	}
 	
 	public void update(float dt) {
-		//if (!cursor.isInside(puddleBounds[puddleLevel]))
-		if (cursor.isInside(puddleBounds[puddleLevel]))
-			System.out.println("INSIDE!!! "+System.currentTimeMillis());
+		
 	}
 	
 }

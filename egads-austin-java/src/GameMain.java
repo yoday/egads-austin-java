@@ -67,6 +67,9 @@ public class GameMain extends JApplet {
 		frame.addKeyListener(core);
 		frame.addMouseListener(core);
 		frame.addMouseMotionListener(core);
+		this.addKeyListener(core);
+		this.addMouseListener(core);
+		this.addMouseMotionListener(core);
 		//close the window when you click on the X
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		//calculate and set the position of the window to center it on the screen

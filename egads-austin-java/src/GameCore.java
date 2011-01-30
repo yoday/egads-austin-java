@@ -161,7 +161,7 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 		
 		if (key.getKeyCode() == KeyEvent.VK_SPACE) {
 			level.puddleLevel = ++level.puddleLevel % level.puddleBounds.length;
-			System.out.printf("[%d] = %s%n", level.puddleLevel, level.puddleBounds[level.puddleLevel]);
+			//System.out.printf("[%d] = %s%n", level.puddleLevel, level.puddleBounds[level.puddleLevel]);
 		}
 	}
 	
