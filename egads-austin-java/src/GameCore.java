@@ -34,7 +34,10 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 	public GameCore() {
 		imageCache = new HashMap<String, BufferedImage>();
 		audioCache = new HashMap<String, AudioClip>();
+		level = new Level();
 	}
+	
+	Level level;
 	
 	public void onInit() {
 		Entity.setPlayer(p);
@@ -42,10 +45,13 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 		sb.init(this);
 	}
 	public void onRender(Graphics2D g) {
+		level.render(g);
 		p.draw(g);
 		sb.draw(g);
 	}
 	public void onUpdate(TimerTask time) {
+		//p.update();
+		level.update(1000f / (float)GameMain.FRAMES_PER_SEC);
 		p.update();
 		sb.update();
 	}
@@ -152,20 +158,23 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 		default : break;
 		}
 		
+		if (key.getKeyCode() == KeyEvent.VK_SPACE) {
+			level.puddleLevel = ++level.puddleLevel % level.puddleBounds.length;
+			System.out.printf("[%d] = %s%n", level.puddleLevel, level.puddleBounds[level.puddleLevel]);
+		}
 	}
 	
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
+	public void keyTyped(KeyEvent key) {
 		
 	}
 	
-	public void mouseDragged(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+	public void mouseDragged(MouseEvent evt) {
 		
 	}
 	
-	public void mouseMoved(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+	public void mouseMoved(MouseEvent evt) {
+		level.cursor.x = evt.getPoint().x;
+		level.cursor.y = evt.getPoint().y;
 		
 	}
 	
