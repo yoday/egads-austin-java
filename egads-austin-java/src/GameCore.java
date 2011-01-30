@@ -28,7 +28,7 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 	private static final int GAMEOVER = 2;
 	private static final int RUNFROGGYRUN = 3;
 	private int gameMode = MENU;
-	
+	BufferedImage menuscreen,gameoverscreen;
 	private static final long serialVersionUID = 543954373910725885L;
 	
 	private HashMap<String, BufferedImage> imageCache;
@@ -38,6 +38,7 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 		imageCache = new HashMap<String, BufferedImage>();
 		audioCache = new HashMap<String, AudioClip>();
 		level = new Level();
+		
 	}
 	public void setPlayer(Player curPlayer){
 		p = curPlayer;
@@ -47,10 +48,24 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 		return level;
 	}
 	public void onInit() {
-		level.init(this);
+		menuscreen = this.getImage("art/screens/title.png");
+		gameoverscreen = this.getImage("art/screens/game-over.png");
+		//level.init(this);
 	}
 	public void onRender(Graphics2D g) {
-		level.render(g);
+		if(gameMode==MAINGAME){
+			level.render(g);
+		}
+		else{
+			if(gameMode==GAMEOVER){
+				g.drawImage(gameoverscreen,0,0,null);
+			}
+			else{
+				if(gameMode==MENU){
+					g.drawImage(menuscreen,0,0,null);
+				}
+			}
+		}
 	}
 	public void onUpdate(TimerTask time) {
 		if(gameMode == MENU){
@@ -60,6 +75,11 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 			if(gameMode == MAINGAME){
 				//p.update();
 				level.update(1000f / (float)GameMain.FRAMES_PER_SEC);
+			}
+			else{
+				if(gameMode == GAMEOVER){
+					
+				}
 			}
 		}
 		
@@ -129,42 +149,52 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 	}
 	
 	public void keyPressed(KeyEvent key) {
-		switch(key.getKeyCode()){
-		case KeyEvent.VK_W: 
-			p.upthrust(true);
-			break;
-		case KeyEvent.VK_S:
-			p.downthrust(true);
-			break;
-		case KeyEvent.VK_A:
-			p.leftturn(true);
-			break;
-		case KeyEvent.VK_D:
-			p.rightturn(true);
-			break;
-		case KeyEvent.VK_SPACE:
-			p.BreakEgg(true);
-			break;
-		default : break;
+		if(gameMode==MAINGAME){
+			switch(key.getKeyCode()){
+			case KeyEvent.VK_W: 
+				p.upthrust(true);
+				break;
+			case KeyEvent.VK_S:
+				p.downthrust(true);
+				break;
+			case KeyEvent.VK_A:
+				p.leftturn(true);
+				break;
+			case KeyEvent.VK_D:
+				p.rightturn(true);
+				break;
+			case KeyEvent.VK_SPACE:
+				p.BreakEgg(true);
+				break;
+			default : break;
+			}
 		}
-		
+		else{
+			if(gameMode==GAMEOVER){
+				if(key.getKeyCode()==KeyEvent.VK_ENTER){
+					gameMode = MENU;
+				}
+			}
+		}
 		
 	}
 	public void keyReleased(KeyEvent key) {
-		switch(key.getKeyCode()){
-		case KeyEvent.VK_W: 
-			p.upthrust(false);
-			break;
-		case KeyEvent.VK_S:
-			p.downthrust(false);
-			break;
-		case KeyEvent.VK_A:
-			p.leftturn(false);
-			break;
-		case KeyEvent.VK_D:
-			p.rightturn(false);
-			break;
-		default : break;
+		if(gameMode==MAINGAME){
+			switch(key.getKeyCode()){
+			case KeyEvent.VK_W: 
+				p.upthrust(false);
+				break;
+			case KeyEvent.VK_S:
+				p.downthrust(false);
+				break;
+			case KeyEvent.VK_A:
+				p.leftturn(false);
+				break;
+			case KeyEvent.VK_D:
+				p.rightturn(false);
+				break;
+			default : break;
+			}
 		}
 		
 	}
