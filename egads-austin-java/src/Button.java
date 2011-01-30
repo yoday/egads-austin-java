@@ -52,6 +52,16 @@ public class Button {
 		return clicked;
 	}
 	
+	public void setSelected(boolean b) {
+		if (b)
+			state = State.DOWN;
+		else
+			state = State.NORMAL;
+	}
+	public boolean isSelected() {
+		return state == State.DOWN;
+	}
+	
 	public void render(Graphics2D g) {
 		switch (state) {
 		case DOWN:
