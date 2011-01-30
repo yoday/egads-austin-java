@@ -14,6 +14,8 @@ public class EnemyTadpole extends Enemy {
 	public static final int NEARFROG = 3;
 	public static final int FROG = 4;
 	
+	public static  double [] resizeValues = {4,2,1.7,1.8,1.9};
+	
 	public static  BufferedImage [] imgEgg;
 	public static  BufferedImage [] imgHatched;
 	public static  BufferedImage [] imgHindlegs;
@@ -67,7 +69,9 @@ public class EnemyTadpole extends Enemy {
 		bi = Currentimg[seqslot];
 		AffineTransform atmp = g2.getTransform();
 		g2.rotate(theta,(cx-gmc.get().getLevel().getScreenULX()) + r,(cy- gmc.get().getLevel().getScreenULY()) + r);
-		g2.drawImage(bi, (cx-gmc.get().getLevel().getScreenULX()), (cy-gmc.get().getLevel().getScreenULY()),null);
+		g2.drawImage(bi, (int)(cx-gmc.get().getLevel().getScreenULX()), (int)(cy-gmc.get().getLevel().getScreenULY()),
+				(int)(bi.getWidth()/resizeValues[AgeState]), (int)(bi.getHeight()/resizeValues[AgeState]), null); 
+		//g2.drawImage(bi, (cx-gmc.get().getLevel().getScreenULX()), (cy-gmc.get().getLevel().getScreenULY()),null);
 		g2.setTransform(atmp);
 		if(imageDelay >= maxDelay){
 			imageDelay = 0;
