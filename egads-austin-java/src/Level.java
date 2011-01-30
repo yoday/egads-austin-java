@@ -5,9 +5,18 @@ import java.awt.image.BufferedImage;
 
 
 public class Level {
+	private static final int numDivs = 3;
+	private int sourceWidth = GameMain.GAME_WIDTH/3;
+	private int sourceHeight = GameMain.GAME_HEIGHT/3;
+	private int destWidth = GameMain.GAME_WIDTH;
+	private int destHeight = GameMain.GAME_HEIGHT;
+	private int leftBnd = GameMain.GAME_WIDTH/2;
+	private int rightBnd = GameMain.GAME_WIDTH*numDivs - GameMain.GAME_WIDTH/2;
+	private int upBnd = GameMain.GAME_HEIGHT/2;
+	private int lowBnd = GameMain.GAME_HEIGHT*numDivs - GameMain.GAME_HEIGHT/2;
 	GameCore core;
-	float viewX;
-	float viewY;
+	int viewX;
+	int viewY;
 	Player player;
 	int puddleLevel;
 	Circle[] puddleBounds;
@@ -27,6 +36,16 @@ public class Level {
 	public Level() {
 		puddleBounds = new Circle[puddleImageNames.length];
 		puddleImages = new BufferedImage[puddleImageNames.length];
+	}
+	public int getScreenULX(){
+		return viewX;
+	}
+	public int getScreenULY(){
+		return viewY;
+	}
+	public void moveScreen(int newULX,int newULY){
+		viewX = newULX;
+		viewY = newULY;
 	}
 	
 	public void init(GameCore core) {
@@ -48,7 +67,7 @@ public class Level {
 		g.translate(0, 0);
 		g.setColor(Color.BLACK);
 		
-		g.drawImage(puddleImages[puddleLevel], -(int)viewX, -(int)viewY, null);
+		g.drawImage(puddleImages[puddleLevel],0,0,destWidth,destHeight, viewX/3, viewY/3,sourceWidth+viewX/3,sourceHeight+viewY/3, null);
 		puddleBounds[puddleLevel].render(g);
 		
 		cursor.render(g);
@@ -57,7 +76,9 @@ public class Level {
 	}
 	
 	public void update(float dt) {
-		
+		int tx = 0;
+		int ty = 0;
+		//int px = player.getCX();
 	}
 	
 }

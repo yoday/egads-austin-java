@@ -51,14 +51,19 @@ public class Player extends Entity{
 	int imageDelay = 0;
 	int maxDelay = 10;
 	
-	
+	public int getCX(){
+		return (int) (x+r);
+	}
+	public int getCY(){
+		return (int)(y+r);
+	}
 	
 	
 	public void draw(Graphics2D g2) {
 		bi = Currentimg[seqslot];
 		AffineTransform atmp = g2.getTransform();
-		g2.rotate(theta,x + r,y + r);
-		g2.drawImage(bi, (int)x, (int)y, null);
+		g2.rotate(theta,(x-gmc.get().getLevel().getScreenULX()) + r,(y-gmc.get().getLevel().getScreenULY()) + r);
+		g2.drawImage(bi, (int)(x-gmc.get().getLevel().getScreenULX()), (int)(y-gmc.get().getLevel().getScreenULY()), null);
 		g2.setTransform(atmp);
 		if(imageDelay >= maxDelay){
 			imageDelay = 0;
@@ -168,8 +173,6 @@ public class Player extends Entity{
 		x += direction*speed*Math.cos(theta + 3* Math.PI/2);
 		y += direction*speed*Math.sin(theta + 3* Math.PI/2);
 		
-		
-		
 	}
 
 	public void init(GameCore gc) {
@@ -199,7 +202,7 @@ public class Player extends Entity{
 		int w = bi.getWidth();
 		int h = bi.getHeight();
 		r = (w>h) ? h/2 : w/2;
-		
+		gmc = new WeakReference<GameCore>(gc);
 	}
 	public void upthrust(boolean isDown){
 		this.up = isDown; // pressing the up key
