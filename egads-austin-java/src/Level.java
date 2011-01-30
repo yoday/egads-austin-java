@@ -138,24 +138,62 @@ public class Level {
 			curLv = (curLv + 1)%4;
 		}
 		frogBabies.add(new EnemyTadpole((int)player.cx + 200 + rand.nextInt(150),
-									  (int)player.cy + 200 + rand.nextInt(150),
-									  entities,
-									  5));
-		frogBabies.get(frogBabies.size() - 1).init(core);
-		frogBabies.add(new EnemyTadpole((int)player.cx - 200 - rand.nextInt(150),
-				  					  (int)player.cy + 200 + rand.nextInt(150),
-				  					  entities,
-				  					  5));
-		frogBabies.get(frogBabies.size() - 1).init(core);
-		frogBabies.add(new EnemyTadpole((int)player.cx + 200 + rand.nextInt(150),
-				  					  (int)player.cy - 200 - rand.nextInt(150),
-				  					  entities,
-				  					  5));
-		frogBabies.get(frogBabies.size() - 1).init(core);
-		frogBabies.add(new EnemyTadpole((int)player.cx - 200 - rand.nextInt(150),
-				  					  (int)player.cy - 200 - rand.nextInt(150),
-				  					  entities,
-				  					  5));
+				  (int)player.cy + 200 + rand.nextInt(150),
+				  entities,
+				  5));
+frogBabies.get(frogBabies.size() - 1).init(core);
+frogBabies.add(new EnemyTadpole((int)player.cx - 200 - rand.nextInt(150),
+				  (int)player.cy + 200 + rand.nextInt(150),
+				  entities,
+				  5));
+frogBabies.get(frogBabies.size() - 1).init(core);
+frogBabies.add(new EnemyTadpole((int)player.cx + 200 + rand.nextInt(150),
+				  (int)player.cy - 200 - rand.nextInt(150),
+				  entities,
+				  5));
+frogBabies.get(frogBabies.size() - 1).init(core);
+frogBabies.add(new EnemyTadpole((int)player.cx - 200 - rand.nextInt(150),
+				  (int)player.cy - 200 - rand.nextInt(150),
+				  entities,
+				  5));
+frogBabies.add(new EnemyTadpole((int)player.cx + 200 + rand.nextInt(150),
+		  (int)player.cy + 200 + rand.nextInt(150),
+		  entities,
+		  5));
+frogBabies.get(frogBabies.size() - 1).init(core);
+frogBabies.add(new EnemyTadpole((int)player.cx - 200 - rand.nextInt(150),
+		  (int)player.cy + 200 + rand.nextInt(150),
+		  entities,
+		  5));
+frogBabies.get(frogBabies.size() - 1).init(core);
+frogBabies.add(new EnemyTadpole((int)player.cx + 200 + rand.nextInt(150),
+		  (int)player.cy - 200 - rand.nextInt(150),
+		  entities,
+		  5));
+frogBabies.get(frogBabies.size() - 1).init(core);
+frogBabies.add(new EnemyTadpole((int)player.cx - 200 - rand.nextInt(150),
+		  (int)player.cy - 200 - rand.nextInt(150),
+		  entities,
+		  5));
+frogBabies.add(new EnemyTadpole((int)player.cx + 200 + rand.nextInt(150),
+		  (int)player.cy + 200 + rand.nextInt(150),
+		  entities,
+		  5));
+frogBabies.get(frogBabies.size() - 1).init(core);
+frogBabies.add(new EnemyTadpole((int)player.cx - 200 - rand.nextInt(150),
+		  (int)player.cy + 200 + rand.nextInt(150),
+		  entities,
+		  5));
+frogBabies.get(frogBabies.size() - 1).init(core);
+frogBabies.add(new EnemyTadpole((int)player.cx + 200 + rand.nextInt(150),
+		  (int)player.cy - 200 - rand.nextInt(150),
+		  entities,
+		  5));
+frogBabies.get(frogBabies.size() - 1).init(core);
+frogBabies.add(new EnemyTadpole((int)player.cx - 200 - rand.nextInt(150),
+		  (int)player.cy - 200 - rand.nextInt(150),
+		  entities,
+		  5));
 		frogBabies.get(frogBabies.size() - 1).init(core);
 		entities.addAll(frogBabies);
 		entities.addAll(edibles);
@@ -200,9 +238,24 @@ public class Level {
 			curLv = (curLv + 1)%4;
 		}
 		frogBabies.add(new EnemyTadpole((int)player.cx + 200 + rand.nextInt(150),
-									  (int)player.cy + 200 + rand.nextInt(150),
-									  entities,
-									  5));
+				  (int)player.cy + 200 + rand.nextInt(150),
+				  entities,
+				  5));
+		frogBabies.get(frogBabies.size() - 1).init(core);
+		frogBabies.add(new EnemyTadpole((int)player.cx + 200 + rand.nextInt(150),
+				  (int)player.cy + 200 + rand.nextInt(150),
+				  entities,
+				  5));
+		frogBabies.get(frogBabies.size() - 1).init(core);
+		frogBabies.add(new EnemyTadpole((int)player.cx + 200 + rand.nextInt(150),
+				  (int)player.cy - 200 + rand.nextInt(150),
+				  entities,
+				  5));
+		frogBabies.get(frogBabies.size() - 1).init(core);
+		frogBabies.add(new EnemyTadpole((int)player.cx + 200 + rand.nextInt(150),
+				  (int)player.cy - 200 + rand.nextInt(150),
+				  entities,
+				  5));
 		frogBabies.get(frogBabies.size() - 1).init(core);
 		frogBabies.add(new EnemyTadpole((int)player.cx - 200 - rand.nextInt(150),
 				  					  (int)player.cy + 200 + rand.nextInt(150),
