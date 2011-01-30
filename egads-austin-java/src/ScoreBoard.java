@@ -17,7 +17,7 @@ public class ScoreBoard extends Entity{
 	private static String[] onstatenames = new String[]{"art/forevolutionbar/1egg-color.png","art/forevolutionbar/2hatched-color.png","art/forevolutionbar/3hindlegs-color.png","art/forevolutionbar/4almostfrog-color.png","art/forevolutionbar/5frog-color.png"};
 	private static String[] offstatenames = new String[]{"art/forevolutionbar/1egg-bw.png","art/forevolutionbar/2hatched-bw.png","art/forevolutionbar/3hindlegs-bw.png","art/forevolutionbar/4almostfrog-bw.png","art/forevolutionbar/5frog-bw.png"};
 	//how many points required to proceed to the next state
-	private static int[] toNextState = new int[]{10,100,100,100,100};
+	private static int[] toNextState = new int[]{30,170,300,500,800};
 	//the actual images
 	private BufferedImage[] numbs;
 	private BufferedImage[] onstates;
