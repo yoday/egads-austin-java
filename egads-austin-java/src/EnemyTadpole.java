@@ -104,7 +104,7 @@ public class EnemyTadpole extends Enemy {
 			}
 		break;
 		case TADPOLE:
-			if(growth >= 40){
+			if(growth >= 100){
 				Currentimg = imgHindlegs;
 				seqslot =0;
 				bi = Currentimg[0];
@@ -119,7 +119,7 @@ public class EnemyTadpole extends Enemy {
 			}
 		break;
 		case HINDLEGS:
-			if(growth >= 80){
+			if(growth >= 200){
 				Currentimg = imgAlmostFrog;
 				seqslot =0;
 				bi = Currentimg[0];
@@ -134,7 +134,7 @@ public class EnemyTadpole extends Enemy {
 			}
 		break;
 		case NEARFROG:
-			if(growth >= 160){
+			if(growth >= 300){
 				Currentimg = imgFrog;
 				seqslot =0;
 				bi = Currentimg[0];
@@ -149,7 +149,7 @@ public class EnemyTadpole extends Enemy {
 			}
 		break;
 		case FROG:
-			if(growth >= 320){
+			/*if(growth >= 320){
 				Currentimg = imgEgg;
 				seqslot =0;
 				bi = Currentimg[0];
@@ -161,7 +161,7 @@ public class EnemyTadpole extends Enemy {
 				speed = 0;
 				//imgName = imgEgg;
 				//bi = gmc.get().getImage(imgName);	
-			}
+			}*/
 		break;
 		}
 		if( target == null )
@@ -169,8 +169,22 @@ public class EnemyTadpole extends Enemy {
 		
 		if(isColliding(target))
 			target = getClosest(difficulty);
-		System.out.println(target.getCX() + " " + target.getCY());
-		destinationTheta = Math.abs(Math.atan((1.0*(target.getCY() - cy))/(1.0*(target.getCX() - cx))));
+		double dx = target.getCX() - cx;
+		double dy = target.getCY() - cy;
+		destinationTheta = Math.atan(dy/dx) - 3* Math.PI/2;
+		if(dx < 0 && dy > 0)
+			destinationTheta += Math.PI / 4;
+		if(dx < 0 && dy < 0)
+			destinationTheta *= -1;
+		if(dx > 0 && dy < 0)
+			destinationTheta -= Math.PI / 4; 
+		
+		if(destinationTheta >= Math.PI*2)
+			destinationTheta -= Math.PI*2;
+		if(destinationTheta < 0)
+			destinationTheta += Math.PI*2;
+		
+		System.out.println(target.getCX() + " " + cx + " " + target.getCY()+ " " + cy + " " + destinationTheta + " " + theta);
 		if(!approximateRadians(theta,destinationTheta)) {
 			if(destinationTheta > theta) {
 				if(destinationTheta - theta <= Math.PI && destinationTheta - theta >= 0)
@@ -286,6 +300,19 @@ public class EnemyTadpole extends Enemy {
 		}
 		Random rand = new Random();
 		return closestList.get(rand.nextInt(amount));
+//		int temp = -1;
+//		Entity temptity = null;
+//		for(Entity e: foodList) {
+//			if(temp == -1 && e != this){
+//				temp = getDistance(e);
+//				temptity = e;
+//			}
+//			if(getDistance(e) < temp && e != this){
+//				temp = getDistance(e);
+//				temptity = e;
+//			}	
+//		}
+//		return temptity;
 	}
 	
 	public void sortClosestList(){
