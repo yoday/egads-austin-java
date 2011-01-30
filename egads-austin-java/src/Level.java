@@ -132,7 +132,7 @@ public class Level {
 	}
 	Circle cursor = new Circle(GameMain.GAME_WIDTH/2, GameMain.GAME_WIDTH/2, 32);
 	
-	public void render(Graphics2D g) {
+	public synchronized void render(Graphics2D g) {
 		AffineTransform savedTransform = g.getTransform();
 		g.translate(0, 0);
 		g.setColor(Color.BLACK);
@@ -143,9 +143,11 @@ public class Level {
 		Composite tmpc = g.getComposite();
 		//g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP,al));
 		g.drawImage(puddleImages[li],0,0,destWidth,destHeight, viewX/3, viewY/3,sourceWidth+viewX/3,sourceHeight+viewY/3, null);
-		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP,au));
-		g.drawImage(puddleImages[ui],0,0,destWidth,destHeight, viewX/3, viewY/3,sourceWidth+viewX/3,sourceHeight+viewY/3, null);
-		g.setComposite(tmpc);
+		if(ui<puddleImages.length){
+			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP,au));
+			g.drawImage(puddleImages[ui],0,0,destWidth,destHeight, viewX/3, viewY/3,sourceWidth+viewX/3,sourceHeight+viewY/3, null);
+			g.setComposite(tmpc);
+		}
 		//puddleBounds[puddleLevel].render(g);
 		
 		//cursor.render(g);
@@ -192,7 +194,7 @@ public class Level {
 		
 	}
 	
-	public void update(float dt) {
+	public synchronized void update(float dt) {
 		//player.update();
 		sb.update();
 		for(Entity e:entities){
@@ -203,12 +205,12 @@ public class Level {
 		//keep the view away from the corners
 		viewX = (px<=leftBnd) ? leftBnd-GameMain.GAME_WIDTH/2 : ( (px>=rightBnd) ? rightBnd-GameMain.GAME_WIDTH/2 : (px-GameMain.GAME_WIDTH/2) ) ;
 		viewY = (py<=upBnd)   ? upBnd-GameMain.GAME_HEIGHT/2   : ( (py>=lowBnd  ) ? lowBnd-GameMain.GAME_HEIGHT/2   : (py-GameMain.GAME_HEIGHT/2) ) ;
-		dryness += dndf;
+		
 		HandleEats();
 		HandleRemoves();
-		
-		if(dryness > puddleImages.length){
-			//game over
+		dryness += dndf;
+		if(dryness >= (puddleImages.length-1)){
+			core.gameOver();
 		}
 		else{
 			int li = (int)Math.floor(dryness);

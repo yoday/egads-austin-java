@@ -42,6 +42,9 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 		level = new Level();
 		
 	}
+	public void gameOver(){
+		gameMode = GAMEOVER;
+	}
 	public void setPlayer(Player curPlayer){
 		p = curPlayer;
 	}
