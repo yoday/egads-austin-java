@@ -28,7 +28,7 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 	private static final int GAMEOVER = 2;
 	private static final int RUNFROGGYRUN = 3;
 	private static final int CREDITS = 4;
-	private int gameMode = MENU;
+	private int gameMode = MAINGAME;
 	BufferedImage menuscreen,gameoverscreen;
 	private static final long serialVersionUID = 543954373910725885L;
 	
@@ -51,7 +51,7 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 	public void onInit() {
 		menuscreen = this.getImage("art/screens/title.png");
 		gameoverscreen = this.getImage("art/screens/game-over.png");
-		//level.init(this);
+		level.init(this);
 	}
 	public void onRender(Graphics2D g) {
 		if(gameMode==MAINGAME){
@@ -209,9 +209,11 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 	}
 	
 	public void mouseMoved(MouseEvent evt) {
-		level.cursor.x = evt.getPoint().x;
-		level.cursor.y = evt.getPoint().y;
-		
+		//level.cursor.x = evt.getPoint().x;
+		//level.cursor.y = evt.getPoint().y;
+		if(gameMode==MENU){
+			
+		}
 	}
 	
 	public void mouseClicked(MouseEvent arg0) {
@@ -231,12 +233,16 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 	
 	public void mousePressed(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+		if(gameMode==MENU){
+			
+		}
 	}
 	
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+		if(gameMode==MENU){
+			
+		}
 	}
 	
 }
