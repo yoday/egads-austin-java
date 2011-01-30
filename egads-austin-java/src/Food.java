@@ -74,7 +74,10 @@ public class Food extends Enemy{
 	//this food sits still and dissappears when eaten
 	boolean first = true;
 	public void update(){
-		
+		if(gmc.get().getLevel().isInPond(cx,cy)){}
+		else{
+			tokill = true;
+		}
 	}
 	public void kill(int condition){
 		ac.play();
