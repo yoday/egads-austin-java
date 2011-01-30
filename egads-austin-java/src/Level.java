@@ -48,6 +48,8 @@ public class Level {
 	private Random rand = new Random();
 	private float dryness = 0;
 	
+	private ArrayList<Entity> entities = new ArrayList<Entity>();
+	
 	public boolean isInPond(int x,int y){
 		float dx2 = x - centerX; dx2 *= dx2;
 		float dy2 = y - centerY; dy2 *= dy2;
@@ -81,6 +83,8 @@ public class Level {
 		}
 		sb = new ScoreBoard();
 		player = new Player(sb);
+		entities.add(player);
+		
 		int curLv = 0;
 		for(int i = 0;i<initSpawn;i++){
 			int fx = rand.nextInt(worldWidth);
@@ -95,7 +99,23 @@ public class Level {
 			edibles.add(new Food(ed,fx,fy));
 			curLv = (curLv + 1)%4;
 		}
-		
+		entities.addAll(edibles);
+		entities.add(new EnemyTadpole((int)player.cx + 20 + rand.nextInt(100),
+									  (int)player.cy + 20 + rand.nextInt(100),
+									  entities,
+									  30));
+		entities.add(new EnemyTadpole((int)player.cx - 20 - rand.nextInt(100),
+				  					  (int)player.cy + 20 + rand.nextInt(100),
+				  					  entities,
+				  					  30));
+		entities.add(new EnemyTadpole((int)player.cx + 20 + rand.nextInt(100),
+				  					  (int)player.cy - 20 - rand.nextInt(100),
+				  					  entities,
+				  					  30));
+		entities.add(new EnemyTadpole((int)player.cx - 20 - rand.nextInt(100),
+				  					  (int)player.cy - 20 - rand.nextInt(100),
+				  					  entities,
+				  					  30));
 		sb.init(core);
 		player.init(core);
 		for(Enemy e:edibles){
