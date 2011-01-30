@@ -28,7 +28,7 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 	private static final int GAMEOVER = 2;
 	private static final int RUNFROGGYRUN = 3;
 	private static final int CREDITS = 4;
-	private int gameMode = MAINGAME;
+	private int gameMode = MENU;
 	BufferedImage menuscreen,gameoverscreen;
 	private static final long serialVersionUID = 543954373910725885L;
 	
@@ -57,21 +57,22 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 		gameoverscreen = this.getImage("art/screens/game-over.png");
 		newgame = new Button(this.getImage("art/menu/newgame.png"),this.getImage("art/menu/newgame-selected.png"),this.getImage("art/menu/newgame-selected.png"),new PressListener(){
 			public void buttonPressed(){
-				
+				level.resetGame();
+				gameMode = MAINGAME;
 			}
 		});
 		newgame.init(null);
 		newgame.centerOn(675,30);
 		credits = new Button(this.getImage("art/menu/credits.png"),this.getImage("art/menu/credits-selected.png"),this.getImage("art/menu/credits-selected.png"),new PressListener(){
 			public void buttonPressed(){
-				
+				gameMode = CREDITS;
 			}
 		});
 		credits.init(null);
 		credits.centerOn(704,90);
 		exit = new Button(this.getImage("art/menu/exit.png"),this.getImage("art/menu/exit-selected.png"),this.getImage("art/menu/exit-selected.png"),new PressListener(){
 			public void buttonPressed(){
-				
+				System.exit(0);
 			}
 		});
 		exit.init(null);
@@ -247,7 +248,9 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 	}
 	
 	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+		if(gameMode==GAMEOVER){
+			gameMode = MENU;
+		}
 		
 	}
 	
