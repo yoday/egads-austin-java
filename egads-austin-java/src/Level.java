@@ -162,17 +162,20 @@ public class Level {
 	public void HandleEats(){
 		for(Entity p:frogBabies){
 			for(Entity e:entities){
-				if(! p.equals(e)){ //Can't eat yourself silly.
+				if( !p.equals(e) ){ //Can't eat yourself silly.
 					if(p instanceof Player){
-						if(e.isEdible(((Player)p).AgeState) && p.isColliding(e.cx,e.cy, e.myR))
-						((Player)p).eat(e);
+						//System.out.println(p.getCX() + " " + p.getCY() + " " + p.getmyR() + " " + ((Player)p).theta);
+						if(e.isEdible(((Player)p).AgeState) && p.isColliding(e.getCX(),e.getCY(), e.getmyR())){
+							((Player)p).eat(e);
+							System.out.println(e.cy);
+						}
 					}
 					else{ // it is an instance of EnemyTadPole
 						if(e.isEdible(((EnemyTadpole)p).AgeState) && p.isColliding(e.cx,e.cy, e.myR))
 							((EnemyTadpole)p).eat(e);
 					}
-					}
 				}
+			}
 		
 		}
 		

@@ -89,7 +89,6 @@ public class Player extends Entity{
 	
 	//Key Cases that should do nothing: UP && DOWN || LEFT && RIGHT
 	public void update() {
-		System.out.println(score.score);
 		switch(AgeState){
 		case EGG: 
 			if(needEvolve){
