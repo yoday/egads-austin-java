@@ -46,6 +46,9 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 	public void gameOver(){
 		gameMode = GAMEOVER;
 	}
+	public void alertToCutscene(){
+		gameMode = RUNFROGGYRUN;
+	}
 	public void setPlayer(Player curPlayer){
 		p = curPlayer;
 	}
@@ -134,6 +137,7 @@ public class GameCore implements MouseListener, MouseMotionListener, KeyListener
 						}
 						else{
 							gameMode = MAINGAME;
+							frogrun.reset();
 						}
 					}
 				}

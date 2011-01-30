@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.image.*;
+import java.lang.ref.*;
 
 public class ScoreBoard extends Entity{
 	//location information
@@ -32,6 +33,7 @@ public class ScoreBoard extends Entity{
 	//used for a rolling counter, how many points must counter count
 	private int over = 0;
 	private static final int ROLLSPD = 3;
+	WeakReference<GameCore> gmc;
 	public void draw(Graphics2D g2){
 		int barw = (BARWIDTH*curSt)/4;
 		if(curSt<4){
@@ -59,6 +61,11 @@ public class ScoreBoard extends Entity{
 		}
 	}
 	public void update(){
+		if(curSt>=4){
+			gmc.get().alertToCutscene();
+			curSt = 0;
+			
+		}
 		if(over>0){
 		
 			int pos = digits.length-1;
@@ -97,6 +104,7 @@ public class ScoreBoard extends Entity{
 		for(int i = 0;i<offstatenames.length;i++){
 			offstates[i] = gc.getImage(offstatenames[i]);
 		}
+		gmc = new WeakReference<GameCore>(gc);
 	}
 	public void kill(int condition){
 		
