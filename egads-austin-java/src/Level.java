@@ -100,26 +100,26 @@ public class Level {
 			edibles.add(new Food(ed,fx,fy));
 			curLv = (curLv + 1)%4;
 		}
-//		frogBabies.add(new EnemyTadpole((int)player.cx + 200 + rand.nextInt(150),
-//									  (int)player.cy + 200 + rand.nextInt(150),
-//									  entities,
-//									  30));
-//		frogBabies.get(frogBabies.size() - 1).init(core);
-//		frogBabies.add(new EnemyTadpole((int)player.cx - 200 - rand.nextInt(150),
-//				  					  (int)player.cy + 200 + rand.nextInt(150),
-//				  					  entities,
-//				  					  30));
-//		frogBabies.get(frogBabies.size() - 1).init(core);
-//		frogBabies.add(new EnemyTadpole((int)player.cx + 200 + rand.nextInt(150),
-//				  					  (int)player.cy - 200 - rand.nextInt(150),
-//				  					  entities,
-//				  					  30));
-//		frogBabies.get(frogBabies.size() - 1).init(core);
-//		frogBabies.add(new EnemyTadpole((int)player.cx - 200 - rand.nextInt(150),
-//				  					  (int)player.cy - 200 - rand.nextInt(150),
-//				  					  entities,
-//				  					  30));
-//		frogBabies.get(frogBabies.size() - 1).init(core);
+		frogBabies.add(new EnemyTadpole((int)player.cx + 200 + rand.nextInt(150),
+									  (int)player.cy + 200 + rand.nextInt(150),
+									  entities,
+									  30));
+		frogBabies.get(frogBabies.size() - 1).init(core);
+		frogBabies.add(new EnemyTadpole((int)player.cx - 200 - rand.nextInt(150),
+				  					  (int)player.cy + 200 + rand.nextInt(150),
+				  					  entities,
+				  					  30));
+		frogBabies.get(frogBabies.size() - 1).init(core);
+		frogBabies.add(new EnemyTadpole((int)player.cx + 200 + rand.nextInt(150),
+				  					  (int)player.cy - 200 - rand.nextInt(150),
+				  					  entities,
+				  					  30));
+		frogBabies.get(frogBabies.size() - 1).init(core);
+		frogBabies.add(new EnemyTadpole((int)player.cx - 200 - rand.nextInt(150),
+				  					  (int)player.cy - 200 - rand.nextInt(150),
+				  					  entities,
+				  					  30));
+		frogBabies.get(frogBabies.size() - 1).init(core);
 		entities.addAll(frogBabies);
 		entities.addAll(edibles);
 		sb.init(core);
@@ -167,7 +167,6 @@ public class Level {
 						//System.out.println(p.getCX() + " " + p.getCY() + " " + p.getmyR() + " " + ((Player)p).theta);
 						if(e.isEdible(((Player)p).AgeState) && p.isColliding(e.getCX(),e.getCY(), e.getmyR())){
 							((Player)p).eat(e);
-							System.out.println(e.cy);
 						}
 					}
 					else{ // it is an instance of EnemyTadPole
