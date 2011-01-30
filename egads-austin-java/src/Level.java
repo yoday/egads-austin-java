@@ -158,9 +158,9 @@ public class Level {
 	}
 	
 	public void update(float dt) {
-		player.update();
+		//player.update();
 		sb.update();
-		for(Enemy e:edibles){
+		for(Entity e:entities){
 			e.update();
 		}
 		int px = player.getCX();
