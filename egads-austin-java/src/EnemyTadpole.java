@@ -188,7 +188,7 @@ public class EnemyTadpole extends Enemy {
 		if(destinationTheta < 0)
 			destinationTheta += Math.PI*2;
 		
-		System.out.println(target.getCX() + " " + cx + " " + target.getCY()+ " " + cy + " " + destinationTheta + " " + theta);
+		//System.out.println(target.getCX() + " " + cx + " " + target.getCY()+ " " + cy + " " + destinationTheta + " " + theta);
 		if(!approximateRadians(theta,destinationTheta)) {
 			if(destinationTheta > theta) {
 				if(destinationTheta - theta <= Math.PI && destinationTheta - theta >= 0)
