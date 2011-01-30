@@ -8,6 +8,9 @@ public abstract class Entity {
 	public static void setPlayer(Player newP){
 		p = newP;
 	}
+	public int getCX(){return cx;}
+	public int getCY(){return cy;}
+	public int getmyR(){return myR;}
 	public abstract void draw(Graphics2D g2);
 	public abstract void update();
 	public abstract void kill(int condition);
@@ -15,10 +18,20 @@ public abstract class Entity {
 	public abstract boolean isEdible(int ageState);
 	public abstract int getPointsValue();
 	public boolean isColliding(int x,int y,int r){
-		int dx2 = (x-cx); dx2 *= dx2;
-		int dy2 = (y-cy); dy2 *= dy2;
-		int sr2 = (r + myR); sr2 *= sr2;
+		//System.out.println("x:" + x + " cx: " + getCX() + " y: " + y + " cy:" + getCY());
+		int dx2 = (x-getCX()); dx2 *= dx2;
+		int dy2 = (y-getCY()); dy2 *= dy2;
+		int sr2 = (r + getmyR()); sr2 *= sr2;
 		int sd = dx2+dy2;
-		return sr2 <= sd;
+		//System.out.println(dx2 + " " + dy2 + " " + sd + " " + sr2);
+		return sr2 >= sd;
+		/*int dx2 = (x-cx)*(x-cx);
+		int dy2 = (y-cy)*(y-cy);
+		int sd = (int)Math.sqrt(dx2+dy2);
+		int sr2 = (r+myR);
+		if(sd <= sr2)
+			return true;
+		else
+			return false;*/
 	}
 }

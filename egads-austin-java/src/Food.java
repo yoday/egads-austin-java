@@ -32,6 +32,7 @@ public class Food extends Enemy{
 		cx = x;
 		cy = y;
 		edible = edibility;
+		tokill = false;
 		switch(edibility){
 		case TADPOLE:
 			index = rand.nextInt(tadimageNames.length);
